@@ -351,6 +351,168 @@
             "tags": [
                 "ch02"
             ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "While prefix is the default syntax for functions in haskell, there are a group of {{c1::operators}} that are {{c1::infix}} by default."
+            ],
+            "flags": 0,
+            "guid": "Ax1u:^(COG",
+            "newlyAdded": false,
+            "note_model_uuid": "48c9bad6-3d34-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Operators are {{c1::functions}} that can be used in infix style. All operators are {{c1::functions}}; not all functions are {{c1::operators}}."
+            ],
+            "flags": 0,
+            "guid": "mAGue_n&!Z",
+            "newlyAdded": false,
+            "note_model_uuid": "48c9bad6-3d34-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "How to make an infix function like `div` work as infix?",
+                "By enclosing it in backticks:<div><br></div><div>```ghci</div><div>λ&gt; div 10 2\n<br>5\n<br>λ&gt; 10 `div` 2\n<br>5<br></div><div>```</div>"
+            ],
+            "flags": 0,
+            "guid": "MQ_D*]E!ET",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "How can we make a prefix function like `+` work in prefix position?",
+                "By enclosing the operator function in parenthses:<div><br></div><div>```ghci</div><div>λ&gt; 1 + 1\n<br>2\n<br>λ&gt; (+) 1 1\n<br>2<br></div><div>```</div>"
+            ],
+            "flags": 0,
+            "guid": "x5Qvt<!%!t",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "If the function name is alphanumeric, it is a {{c1::prefix}} function by default, and not all prefix functions can be made {{c1::infix}} by using backticks. If the name is a symbol, it is {{c2::infix}} by default but can be made prefix by wrapping it in {{c2::parentheses}}.<br>"
+            ],
+            "flags": 0,
+            "guid": "mm(/Gic={C",
+            "newlyAdded": false,
+            "note_model_uuid": "48c9bad6-3d34-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "How can we query GHCi for the associativity and precedence of functions and operator functions?",
+                "By using `:info`:<br><br>```ghci<div>λ&gt; :info div<br></div><div>λ&gt; :info (+)<br></div><div>```</div><div><br></div><div>NOTE: It looks like recent versions of GHCi allows querying information on function operators even without parenthesis, like `:info +`.<br></div>"
+            ],
+            "flags": 0,
+            "guid": "x2z8$e()+5",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "`:info (+)` shows, among other things, the information \"infixl 6 +\". Explain.",
+                "- `infixl` means it is an infix function, left associative.<div>- `6` the precedence, 0 the lowest precedence, 9 the highest.</div><div>- `+` is the name of the function.</div>"
+            ],
+            "flags": 0,
+            "guid": "c:1A+JrM4b",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "What is difference in associativity and precedence if you compare `:info` on `*` and `^`?",
+                "`*` is infixl, precedence 7, and `^` is infixr, precedence 8."
+            ],
+            "flags": 0,
+            "guid": "sEXc`OIZF>",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Is `2 ^ 3 ^ 4` the same as `2 ^ (3 ^ 4)`? Explain.",
+                "No difference. Since `^` is infixr, it already associates from the right, so, adding parentheses on the right changes nothing.<div><br></div><div><div>```</div><div>2 ^ 3 ^ 4</div><div>2 ` 81</div><div>2417851639229258349412352</div><div>```</div></div>"
+            ],
+            "flags": 0,
+            "guid": ";sI$j0[{d",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Is `2 ^ 3 ^ 4` the same as `(2 ^ 3) ^ 4`? Explain.",
+                "Yes, it is different.<div><br></div><div>Since `^` is infixr, meaning it is right-associative, adding parentheses on the left changes the precedence.</div><div><br></div><div>```</div><div>(2 ^ 3) ^ 4</div><div>&nbsp; &nbsp; &nbsp;8&nbsp; ^ 4</div><div>&nbsp; &nbsp; &nbsp; &nbsp;4096</div><div>```</div>"
+            ],
+            "flags": 0,
+            "guid": "u.T*MduDr>",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Can we remove the parentheses in the expression `2 ^ (3 ^ 4)` and still get the same result? Explain.",
+                "Parentheses are being used in a way that does not change the default order of evaluation that `^` already produces by default.<div><br></div><div><br></div><div>`^` is right-associative, so, parenthesizing the right sub-expression changes nothing.</div>"
+            ],
+            "flags": 0,
+            "guid": "zMU[#ze,,%",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
         }
     ]
 }

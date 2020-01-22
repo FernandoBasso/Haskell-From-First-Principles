@@ -18,7 +18,7 @@ Page 35.
 
 
 
-## 02 writing a function
+### 02 writing a function
 
 ```ghci
 λ> f n = 3.14 * (n * n)
@@ -43,4 +43,20 @@ Page 35.
 λ> f 4
 50.26548245743669
 ```
+
+## Exercises: Parentheses and Association
+
+Page 39.
+
+### 01 add, multiply
+
+a and b produce different results. Parentheses here does make a difference.
+
+### 02 perimeter, multiply and add
+
+No change. Parenthesizing multiplication around an addition does not change anything. The multiplication would have been performed first anyway.
+
+### 03 divide and add
+
+Here, doing 2 + 9 before the division does change the result.
 

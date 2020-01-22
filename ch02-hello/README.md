@@ -60,3 +60,40 @@ No change. Parenthesizing multiplication around an addition does not change anyt
 
 Here, doing 2 + 9 before the division does change the result.
 
+## Exercises: Heal the Sick
+
+Page 45.
+
+### 01 area space after dot
+
+There is a space after the dot in "3. ".
+
+```haskell
+area x = 3.14 * (x * x)
+```
+
+### 02 unbound variable, unused variable
+
+The function bounds `x` but attempts to use `b`, which is not in scope. Fix: use `x` inside the body of the function:
+
+```haskell
+double x = x * 2
+```
+
+### 03 indentation mishap
+
+There is a horrible, monstrous whitespace before `y` causing GHCi to throw a fit.
+
+```haskell
+x = 7
+y = 10
+f = x + y
+```
+
+
+
+
+
+https://www.quora.com/How-do-I-use-the-dollar-sign-separator-in-Haskell
+
+https://stackoverflow.com/questions/940382/what-is-the-difference-between-dot-and-dollar-sign

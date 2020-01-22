@@ -96,7 +96,8 @@
             ],
             "sortf": 0,
             "tags": [
-                "ch02"
+                "ch02",
+                "precedence"
             ],
             "tmpls": [
                 {
@@ -141,7 +142,8 @@
             ],
             "sortf": 0,
             "tags": [
-                "ch02"
+                "ch02",
+                "numbers"
             ],
             "tmpls": [
                 {
@@ -269,7 +271,7 @@
             "data": "",
             "fields": [
                 "Can function and variable identifiers start with an uppercase letter?&nbsp;",
-                "No, identifiers starting with uppercase letters are used for defining type and data constructors (among other things), and they _cannot_ be used for starting variable and function names."
+                "No, identifiers starting with uppercase letters are used for defining type and data constructors, module names, (among other things), and they _cannot_ be used for starting variable and function names."
             ],
             "flags": 0,
             "guid": "CBPZ7fx014",
@@ -512,6 +514,260 @@
             "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
             "tags": [
                 "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Can we use a variable or function in a source file before it was defined? That is, use a function on line 1, and define it on line 2?",
+                "Yes, we can. GHCi loads the entire file before actually executing the code, so, it knwos all the values that have been defined before runtime.<div><br></div><div>TODO: I think I read somewhere Haskell uses something called \"two-pass compilation.</div>"
+            ],
+            "flags": 0,
+            "guid": "JOHey<cVG?",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Why does `div 10 3` returns 3, droping the decimal .3333?",
+                "Because `div` is for integral division. For fractional division, us `/`."
+            ],
+            "flags": 0,
+            "guid": "l|25OcY+o[",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "`(/) 10 6` is 1.66, which means it is closest to 2 than to 1. However, `div 10 6` is 1, not 2. That is because `div` always...",
+                "...rounds down. It does not round based on the .5 thing like many rounding functions in languages do."
+            ],
+            "flags": 0,
+            "guid": "Er:[YE@;WO",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "`(/) 10 (-3)` is -3.333, which means it is closest to -3 than to -4. However, `div 10 (-3)` is -4, not -3. That is because `div` always...",
+                "...rounds down. It does not round based on the .5 thing like many rounding functions in languages do.\n<br> <br>Down here is going further to the left, to the negative numbers."
+            ],
+            "flags": 0,
+            "guid": "CO=yHpO^3Z",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "What does `mod` do?",
+                "It produces the remainder of a modular division."
+            ],
+            "flags": 0,
+            "guid": "hrJ)^W{b6u",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Why do both `rem 3 5` and `mod 3 5` produce 3?",
+                "Because `rem` and `mod` only do integral division. The quotient is 0 and the remainder is 3.<div><br></div><div>Remember that `mod` gives use the remainder of integral division, so, `mod 3 5` is 3 as well.</div>"
+            ],
+            "flags": 0,
+            "guid": "C.zLg{LW-W",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "In haskell, the result `mod` will have the same sign of the {{c1::divisor}}, and the reesult of `rem` will have the same sign as the {{c1::dividend}}."
+            ],
+            "flags": 0,
+            "guid": "shFe_dn6/.",
+            "newlyAdded": false,
+            "note_model_uuid": "48c9bad6-3d34-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Is `mod 3 (-2)` 1 or -1? Explain.",
+                "It is -1 because the result of `mod` always keep the sign of the divisor."
+            ],
+            "flags": 0,
+            "guid": "hlL-4pR}4u",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Is the result of `mod (-3) 2` 1 or -1? Explain.",
+                "It is 2 because the result of `mod` always keep the sign of the divisor."
+            ],
+            "flags": 0,
+            "guid": "M@[A;%7x?M",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Is the result of `rem 3 (-2)` 1 or -1? Explain.",
+                "It is 1 because the result of `rem` always keep the sign of the dividend."
+            ],
+            "flags": 0,
+            "guid": "t:3iyB#brE",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Is the result of `rem (-3) 2` 1 or -1? Explain.",
+                "It is -1 because the result of `rem` always keep the sign of the dividend."
+            ],
+            "flags": 0,
+            "guid": "b+nUjc5$rN",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Why doesn't `1 + -2` add 1 to -2 and instead produces and error? Fix it.",
+                "Because both `+` and `-` are \"infixl 6\", so, GHCi thinks we want to add and subtract, not knowing how to resolve the precedence.<div><br></div><div>Fix: `1 + (-2)` or P`1 + (negate 2)`.</div><div><br></div><div>NOTE: There are places where just writing `-1` is okay, for example, `num = -1`.</div>"
+            ],
+            "flags": 0,
+            "guid": "N~oS?N)iFD",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "The `-` operator (function) has two possible meanings. Explain.",
+                "It can either subtract, as in `(-) 1 1`, or to negate, as in `-1`, which is the same as `(negate 1)`.<br><br>Note that a space after `-` as in `- 1` still means negation.<div><br></div><div>Also not that is negation of the numeric sign, not negation as in booleans.</div>"
+            ],
+            "flags": 0,
+            "guid": "Aljwa~fs}u",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "What is the result of `print 1 + 1`? Explain. Fix it.",
+                "It is an error. `:type print` tells it takes one argument. Therefore, `print` takes the `1` as the argument, and the `+ 1` part is becomes nonsense to GHCi.<div><br></div><div>The fix is to first evaluate `1 + 1` and then passing it, a single result/argument to `print`:</div><div><br></div><div>```ghci</div><div>print (1 + 1)</div><div>print $ 1 + 1</div><div>```</div>"
+            ],
+            "flags": 0,
+            "guid": "ptLyF(<S>z",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "How to use `$` to avoid all the parentheses in `putStrLn (show (1 + 1))`?",
+                "`putStrLn $ show $ 1 +`"
+            ],
+            "flags": 0,
+            "guid": "eFP!Jb&CJ?",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "numbers"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "```haskell<div>putStrLn (show (1 + 1))<br><br>putStrLn (show $ 1 + 1)<br><br>putStrLn $ show (1 + 1)<br><br>putStrLn $ show $ 1 + 1<br></div><div>```</div><div><br></div><div>Do all of the above eval do the same thing?</div>",
+                "No, all of those are different syntaxes to express the same thing, and produce the same result."
+            ],
+            "flags": 0,
+            "guid": "x=(K.c&RnT",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02",
+                "precedence"
             ]
         }
     ]

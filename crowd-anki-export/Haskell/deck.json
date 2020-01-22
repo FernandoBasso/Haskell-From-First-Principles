@@ -61,7 +61,7 @@
         {
             "__type__": "NoteModel",
             "crowdanki_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
-            "css": ".card {\n font-family: arial;\n font-size: 20px;\n text-align: center;\n color: black;\n background-color: white;\n}\n",
+            "css": ".card {\n font-family: 'Source Code Variable', 'Ubuntu Mono', monospace;\n font-size: 20px;\n text-align: left;\n color: black;\n background-color: white;\n}\n",
             "flds": [
                 {
                     "font": "Source Code Variable",
@@ -111,6 +111,51 @@
             ],
             "type": 0,
             "vers": []
+        },
+        {
+            "__type__": "NoteModel",
+            "crowdanki_uuid": "48c9bad6-3d34-11ea-ad83-abf72a9860b6",
+            "css": ".card {\n font-family: 'Source Code Variable', 'Ubuntu Mono', monospace;\n font-size: 20px;\n text-align: left;\n color: black;\n background-color: white;\n}\n\n.cloze {\n font-weight: normal;\n color: blue;\n}\n.nightMode .cloze {\n color: lightblue;\n}",
+            "flds": [
+                {
+                    "font": "Source Code Variable",
+                    "media": [],
+                    "name": "Text",
+                    "ord": 0,
+                    "rtl": false,
+                    "size": 18,
+                    "sticky": false
+                }
+            ],
+            "latexPost": "\\end{document}",
+            "latexPre": "\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\\begin{document}\n",
+            "name": "Cloze",
+            "req": [
+                [
+                    0,
+                    "any",
+                    [
+                        0
+                    ]
+                ]
+            ],
+            "sortf": 0,
+            "tags": [
+                "ch02"
+            ],
+            "tmpls": [
+                {
+                    "afmt": "{{cloze:Text}}",
+                    "bafmt": "",
+                    "bqfmt": "",
+                    "did": null,
+                    "name": "Cloze",
+                    "ord": 0,
+                    "qfmt": "{{cloze:Text}}"
+                }
+            ],
+            "type": 1,
+            "vers": []
         }
     ],
     "notes": [
@@ -119,7 +164,7 @@
             "data": "",
             "fields": [
                 "When is an expression in normal form?",
-                "It is when it cannot be further reduced. It has reached its irreducible form."
+                "It is when it cannot be further reduced. It has reached its irreducible form, a.k.a canonical/normal form."
             ],
             "flags": 0,
             "guid": "If>rc5:u-X",
@@ -173,6 +218,138 @@
             "tags": [
                 "ch02",
                 "ghci"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Reducible expressions are also called {{c1::redexes}}."
+            ],
+            "flags": 0,
+            "guid": "rPI=G%8k<3",
+            "newlyAdded": false,
+            "note_model_uuid": "48c9bad6-3d34-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Are functions considered expressions in Haskell?",
+                "Yes. They are a special type of expression. They are expressions that can be applied to other expressions/values."
+            ],
+            "flags": 0,
+            "guid": "IVaxX{)5g_",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Can we apply a function to multiple arguments?",
+                "Yes and no.<br><br>Syntactically, it looks like we can do that, but in reallity, we apply a function to one single argument, which returns a function that awaits for another single argument, and so on, until the there are no more arguments to be consumed, in which case the final result is produced.<div><br></div><div>Techinically, we cannot, but in practice, because of syntactic facilities, it is the same thing as if we could.</div><div><br></div><div>`add 1 1` in Haskell produces 2, the same as `add(1, 1)` in Javascript or Ruby would. So, for practical purposes, we can say things like \"this function takes two arguments\". We just have to keep in mind that behind the scenes some magic happens.&nbsp;</div>"
+            ],
+            "flags": 0,
+            "guid": "gYYnEA{sp*",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Can function and variable identifiers start with an uppercase letter?&nbsp;",
+                "No, identifiers starting with uppercase letters are used for defining type and data constructors (among other things), and they _cannot_ be used for starting variable and function names."
+            ],
+            "flags": 0,
+            "guid": "CBPZ7fx014",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "When we talk about evaluating an expression, we’re talking about {{c1::reducing the terms}} until the expression reaches its {{c1::simplest}} form.&nbsp; Once a term has reached its simplest form, we say that it is {{c2::irreducible}} or finished evaluating. Usually, we call this a {{c3::value}}.<br>"
+            ],
+            "flags": 0,
+            "guid": "Ar<&35fVZs",
+            "newlyAdded": false,
+            "note_model_uuid": "48c9bad6-3d34-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "As in the lambda calculus, application is&nbsp;{{c1::evaluation}}: applying a function to an argument allows evaluation, a.k.a {{c1::reduction}}."
+            ],
+            "flags": 0,
+            "guid": "jEN)H+9E91",
+            "newlyAdded": false,
+            "note_model_uuid": "48c9bad6-3d34-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Are values expressiosn? Can they be reduced further?",
+                "Yes, values are expressions. 1 is an expression, for example. Values are expressions that have reached their irreducible form, also known as normal/canonical form."
+            ],
+            "flags": 0,
+            "guid": "o>g|uX0DeK",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "We have the function `f x = x`.<div><br></div><div>```haskell</div><div>f 1</div><div>```</div><div><br></div><div>Is the application above, `f 1`, irreducible?</div>",
+                "Yes, it is an expression involving a function and a value (two expressions themselves) which can be further reduced the the final, irreducible value, a.k.a canonical or normal form."
+            ],
+            "flags": 0,
+            "guid": "pi{y^dz;0o",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Haskell does not evaluate everything to canonical/normal form by default. It only evaulates to Weak Head Normal Form (WHNF) by default. What does this mean?",
+                "It means that not everything will be evaluated to its irreducible form immediately. That is why expressions like this do not run infinitely until the end of time:<div><br></div><div>```ghci</div><div>λ&gt; take 0 [1..]<br></div><div>```</div>"
+            ],
+            "flags": 0,
+            "guid": "N%-SC~9NUf",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
             ]
         }
     ]

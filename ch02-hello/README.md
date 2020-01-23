@@ -97,3 +97,63 @@ f = x + y
 https://www.quora.com/How-do-I-use-the-dollar-sign-separator-in-Haskell
 
 https://stackoverflow.com/questions/940382/what-is-the-difference-between-dot-and-dollar-sign
+
+
+
+## Exercises: A Head Code
+
+Page 59.
+
+### let expressions
+
+#### 01 let
+
+`let x = 5 in x` produces 5. The `in x` is like a return statement in this case. We bind 5 to `x` and “return” x.
+
+#### 02 let
+
+Similar to the previous one. Produce `x * x`, which is 25.
+
+#### 03 let
+
+Produces 30. We use `let` to bind two values for `x` and `y`, and both are in scope for the `in` clause.
+
+#### 04 let
+
+Similar to the previous one. Just that the `in` clause ignores `y`, and the result is 6.
+
+### Rewrite to where
+
+#### 01 where
+
+```haskell
+ex1 = result
+  where x       = 3
+        y       = 1000
+        result  = x * 3 + y
+```
+
+#### 02 where
+
+```haskell
+ex2 = result
+  where
+    y       = 10
+    x       = 10 * 5 + y
+    result  = x * 5
+```
+
+#### 03 where
+
+```haskell
+ex3 = result
+  where
+    x       = 7
+    y       = negate x
+    z       = y * 10
+    result  = z / x + y
+```
+
+
+
+## The End

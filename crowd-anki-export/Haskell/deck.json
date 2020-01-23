@@ -96,8 +96,7 @@
             ],
             "sortf": 0,
             "tags": [
-                "ch02",
-                "precedence"
+                "ch02"
             ],
             "tmpls": [
                 {
@@ -299,7 +298,7 @@
             "__type__": "Note",
             "data": "",
             "fields": [
-                "As in the lambda calculus, application is&nbsp;{{c1::evaluation}}: applying a function to an argument allows evaluation, a.k.a {{c1::reduction}}."
+                "As in the lambda calculus, application is&nbsp;{{c1::evaluation}}: applying a function to an argument allows evaluation, a.k.a. {{c1::reduction}}."
             ],
             "flags": 0,
             "guid": "jEN)H+9E91",
@@ -328,8 +327,8 @@
             "__type__": "Note",
             "data": "",
             "fields": [
-                "We have the function `f x = x`.<div><br></div><div>```haskell</div><div>f 1</div><div>```</div><div><br></div><div>Is the application above, `f 1`, irreducible?</div>",
-                "Yes, it is an expression involving a function and a value (two expressions themselves) which can be further reduced the the final, irreducible value, a.k.a canonical or normal form."
+                "We have the function `f x = x`. Is the application `f 1` reducible?",
+                "Yes, it is an expression involving a function and a value (two expressions themselves) which can be further reduced the the final, irreducible value, a.k.a. canonical or normal form."
             ],
             "flags": 0,
             "guid": "pi{y^dz;0o",
@@ -431,7 +430,7 @@
             "data": "",
             "fields": [
                 "How can we query GHCi for the associativity and precedence of functions and operator functions?",
-                "By using `:info`:<br><br>```ghci<div>λ&gt; :info div<br></div><div>λ&gt; :info (+)<br></div><div>```</div><div><br></div><div>NOTE: It looks like recent versions of GHCi allows querying information on function operators even without parenthesis, like `:info +`.<br></div>"
+                "By using `:info`:<br><br>```ghci<div>λ&gt; :info div<br></div><div>λ&gt; :info (+)<br></div><div>```</div><div><br></div><div>NOTE: It looks like recent versions of GHCi allows querying information on function operators even without parenthesis, like `:info +`. `:type` on function operators do require parentheses.<br></div>"
             ],
             "flags": 0,
             "guid": "x2z8$e()+5",
@@ -476,7 +475,7 @@
             "data": "",
             "fields": [
                 "Is `2 ^ 3 ^ 4` the same as `2 ^ (3 ^ 4)`? Explain.",
-                "No difference. Since `^` is infixr, it already associates from the right, so, adding parentheses on the right changes nothing.<div><br></div><div><div>```</div><div>2 ^ 3 ^ 4</div><div>2 ` 81</div><div>2417851639229258349412352</div><div>```</div></div>"
+                "No difference. Since `^` is infixr, it already associates from the right, so, adding parentheses on the right changes nothing.<div><br></div><div><div>```</div><div>2 ^ 3 ^ 4</div><div>2 ^ 81</div><div>2417851639229258349412352</div><div>```</div></div>"
             ],
             "flags": 0,
             "guid": ";sI$j0[{d",
@@ -491,7 +490,7 @@
             "data": "",
             "fields": [
                 "Is `2 ^ 3 ^ 4` the same as `(2 ^ 3) ^ 4`? Explain.",
-                "Yes, it is different.<div><br></div><div>Since `^` is infixr, meaning it is right-associative, adding parentheses on the left changes the precedence.</div><div><br></div><div>```</div><div>(2 ^ 3) ^ 4</div><div>&nbsp; &nbsp; &nbsp;8&nbsp; ^ 4</div><div>&nbsp; &nbsp; &nbsp; &nbsp;4096</div><div>```</div>"
+                "Yes, it is different.<div><br></div><div>Since `^` is infixr, meaning it is right-associative, adding parentheses on the left changes the precedence.</div><div><br></div><div>```</div><div>(2 ^ 3) ^ 4</div><div>&nbsp; &nbsp; &nbsp;8&nbsp; ^ 4</div><div>&nbsp; &nbsp; &nbsp; &nbsp;4096</div><div>```</div><div><br></div><div>which is different than</div><div><br></div><div>```</div><div>2 ^ 3 ^ 4</div><div>2 ^ 81</div><div>18446744073709551616<br></div><div>```</div><div><br></div>"
             ],
             "flags": 0,
             "guid": "u.T*MduDr>",
@@ -521,7 +520,7 @@
             "data": "",
             "fields": [
                 "Can we use a variable or function in a source file before it was defined? That is, use a function on line 1, and define it on line 2?",
-                "Yes, we can. GHCi loads the entire file before actually executing the code, so, it knwos all the values that have been defined before runtime.<div><br></div><div>TODO: I think I read somewhere Haskell uses something called \"two-pass compilation.</div>"
+                "Yes, we can. GHCi loads the entire file before actually executing the code, so, it knwos all the values that have been defined before runtime.<div><br></div><div>TODO: I think I read somewhere Haskell uses something called \"two-pass compilation\".</div>"
             ],
             "flags": 0,
             "guid": "JOHey<cVG?",
@@ -536,7 +535,7 @@
             "data": "",
             "fields": [
                 "Why does `div 10 3` returns 3, droping the decimal .3333?",
-                "Because `div` is for integral division. For fractional division, us `/`."
+                "Because `div` is for integral division. For fractional division, use `/`."
             ],
             "flags": 0,
             "guid": "l|25OcY+o[",
@@ -768,6 +767,36 @@
             "tags": [
                 "ch02",
                 "precedence"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "`2 * (2 ^ 2)` works. Why does neither `2 * 2 $ ^ 2` or `2 * 2 $ (^2)` work?",
+                "Because `$` is being used in the wrong place and `2 *` mus t be turned into a partially applied function. `(2*) $ 2 ^ 2` is the correct syntax for this."
+            ],
+            "flags": 0,
+            "guid": "sj}-fiY-%5",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Is `(2 ^ 3) ^ 4` the same as `(2^) 3 ^ 4`. Explain.",
+                "Yes, the same thing.<div><br></div><div>In the first case, first reduce `2 ^ 3` and then `^ 4^.</div><div><br></div><div>In the second case, partially apply `2 ^`, sectioning it to the right, meaning it will be `2 ^ 3` (not `3 ^ 2`), then then `^ 4`.</div>"
+            ],
+            "flags": 0,
+            "guid": "q_a{UOfNVC",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
             ]
         }
     ]

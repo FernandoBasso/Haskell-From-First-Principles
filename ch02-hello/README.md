@@ -154,6 +154,136 @@ ex3 = result
     result  = z / x + y
 ```
 
+## Chapter Exercises
+
+Page 60.
+
+### Parenthesization
+
+Page 61.
+
+#### 01
+
+```ghci
+λ> 2 + 2 * 3 - 1
+7
+λ> 2 + (2 * 3) - 1
+7
+λ> (2 + (2 * 3)) - 1
+7
+```
+
+#### 02
+
+```ghci
+λ> (^) 10 $ 1 + 1
+100
+λ> ((^) 10) $ (1 + 1)
+100
+```
+
+#### 04
+
+```ghci
+λ> 2 ^ 2 * 4 ^ 5 + 1
+4097
+λ> (2 ^ 2) * (4 ^ 5) + 1
+4097
+λ> ((2 ^ 2) * (4 ^ 5)) + 1
+4097
+```
+
+### Equivalent expressions
+
+Page 61.
+
+#### 01
+
+The expression `1 + 1` is the same as the expression  2.
+
+#### 02
+
+The expression `10 ^ 2` is the same as the expression `10 + 9 * 10`, because `9 * 10` is reduced first, which is 90, which is then added to 10. Both expressions produce the value 100.
+
+#### 03
+
+These are different. `400 - 37` means “subtract 37 from 400, which is 363. `(-) 37 400` means “from 37, subtract 400, which results in -363.
+
+#### 04
+
+`div`  does integral division, while `/` does fractional division. Therefore, ``100 `div` 3`` results in 33 (discarding the fractional part), and `100 / 3` results in `33.333333333333336`.
+
+#### 05
+
+The results will be different because of the order of evaluation.
+
+### More fun with functions
+
+#### 01 waxOn
+
+```ghci
+λ> z = 7
+λ> y = z + 8
+λ> x = y ^ 2
+λ> waxOn = x * 5
+λ> 10 + waxOn
+1135
+λ> (+10) waxOn
+1135
+λ> (-) 15 waxOn
+-1110
+λ> (-) waxOn 15
+1110
+```
+
+#### 02, 03
+
+```ghci
+λ> triple x = x * 3
+λ> triple waxOn
+3375
+```
+
+#### 04 let waxOn
+
+```haskell
+waxOn =
+  let
+    z = 7
+    y = z + 8
+    x = y ^ 2
+  in x * 5
+```
+
+#### 05 waxOn and triple
+
+```haskell
+waxOn =
+  let
+    z = 7
+    y = z + 8
+    x = y ^ 2
+  in x * 5
+
+triple n = n * 3
+```
+
+#### waxOff
+
+```haskell
+waxOn =
+  let
+    z = 7
+    y = z + 8
+    x = y ^ 2
+  in x * 5
+
+triple n = n * 3
+
+waxOf n = triple n
+```
+
 
 
 ## The End
+

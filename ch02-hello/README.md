@@ -1,6 +1,6 @@
 # Hello Haskell, chapter 02
 
-
+[TOC]
 
 ## Exercises: Comprehension Check
 

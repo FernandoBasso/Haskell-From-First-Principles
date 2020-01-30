@@ -165,7 +165,7 @@
             "data": "",
             "fields": [
                 "When is an expression in normal form?",
-                "It is when it cannot be further reduced. It has reached its irreducible form, a.k.a canonical/normal form."
+                "It is when it cannot be further reduced. It has reached its irreducible form, a.k.a. canonical/normal form."
             ],
             "flags": 0,
             "guid": "If>rc5:u-X",
@@ -270,7 +270,7 @@
             "data": "",
             "fields": [
                 "Can function and variable identifiers start with an uppercase letter?&nbsp;",
-                "No, identifiers starting with uppercase letters are used for defining type and data constructors, module names, (among other things), and they _cannot_ be used for starting variable and function names."
+                "No, capitalized identifiers are used for defining type and data constructors, module names, (among other things), and they _cannot_ be used for starting variable and function names."
             ],
             "flags": 0,
             "guid": "CBPZ7fx014",
@@ -328,7 +328,7 @@
             "data": "",
             "fields": [
                 "We have the function `f x = x`. Is the application `f 1` reducible?",
-                "Yes, it is an expression involving a function and a value (two expressions themselves) which can be further reduced the the final, irreducible value, a.k.a. canonical or normal form."
+                "Yes, it is an expression involving a function and a value (two expressions themselves) which can be further reduced to the final, irreducible value, a.k.a. canonical or normal form."
             ],
             "flags": 0,
             "guid": "pi{y^dz;0o",
@@ -598,8 +598,8 @@
             "__type__": "Note",
             "data": "",
             "fields": [
-                "Why do both `rem 3 5` and `mod 3 5` produce 3?",
-                "Because `rem` and `mod` only do integral division. The quotient is 0 and the remainder is 3.<div><br></div><div>Remember that `mod` gives use the remainder of integral division, so, `mod 3 5` is 3 as well.</div>"
+                "Why do both `rem 2 4` and `mod 2 4` produce 2 instead of 0.5?",
+                "Because `rem` and `mod` only do integral division. The quotient is 0 and the remainder is 2."
             ],
             "flags": 0,
             "guid": "C.zLg{LW-W",
@@ -646,7 +646,7 @@
             "data": "",
             "fields": [
                 "Is the result of `mod (-3) 2` 1 or -1? Explain.",
-                "It is 2 because the result of `mod` always keep the sign of the divisor."
+                "It is 1 because the result of `mod` always keeps the sign of the divisor."
             ],
             "flags": 0,
             "guid": "M@[A;%7x?M",
@@ -693,8 +693,8 @@
             "__type__": "Note",
             "data": "",
             "fields": [
-                "Why doesn't `1 + -2` add 1 to -2 and instead produces and error? Fix it.",
-                "Because both `+` and `-` are \"infixl 6\", so, GHCi thinks we want to add and subtract, not knowing how to resolve the precedence.<div><br></div><div>Fix: `1 + (-2)` or P`1 + (negate 2)`.</div><div><br></div><div>NOTE: There are places where just writing `-1` is okay, for example, `num = -1`.</div>"
+                "Why doesn't `1 + -2` add 1 to -2 and instead produces an error? Fix it.",
+                "Because both `+` and `-` are \"infixl 6\", so, GHCi thinks we want to add and subtract, not knowing how to resolve the precedence.<div><br></div><div>Fix: `1 + (-2)` or `1 + (negate 2)`.</div><div><br></div><div>NOTE: There are places where just writing `-1` is okay, for example, `num = -1`. This would work too:</div><div><br></div><div>```</div><div>(+) 1 $ -2</div><div>```</div>"
             ],
             "flags": 0,
             "guid": "N~oS?N)iFD",
@@ -710,7 +710,7 @@
             "data": "",
             "fields": [
                 "The `-` operator (function) has two possible meanings. Explain.",
-                "It can either subtract, as in `(-) 1 1`, or to negate, as in `-1`, which is the same as `(negate 1)`.<br><br>Note that a space after `-` as in `- 1` still means negation.<div><br></div><div>Also not that is negation of the numeric sign, not negation as in booleans.</div>"
+                "It can either subtract, as in `(-) 1 1`, or to negate, as in `-1`, which is the same as `(negate 1)`.<br><br>Note that a space after `-` as in `- 1` still means negation (if it is not in between two operands. `1 - 1` is subtraction).<div><br></div><div>Also note that it is negation of the numeric sign, not negation as in booleans.</div>"
             ],
             "flags": 0,
             "guid": "Aljwa~fs}u",
@@ -725,8 +725,8 @@
             "__type__": "Note",
             "data": "",
             "fields": [
-                "What is the result of `print 1 + 1`? Explain. Fix it.",
-                "It is an error. `:type print` tells it takes one argument. Therefore, `print` takes the `1` as the argument, and the `+ 1` part is becomes nonsense to GHCi.<div><br></div><div>The fix is to first evaluate `1 + 1` and then passing it, a single result/argument to `print`:</div><div><br></div><div>```ghci</div><div>print (1 + 1)</div><div>print $ 1 + 1</div><div>```</div>"
+                "What is the result of `print 1 + 1`? Explain.",
+                "It is an error. `:type print` tells it takes one argument. Therefore, `print` takes the `1` as the argument, and the `+ 1` part is becomes nonsense to GHCi.<div><br></div><div>The fix is to first evaluate `1 + 1` and then pass it, a single result/argument to `print`:</div><div><br></div><div>```ghci</div><div>print (1 + 1)</div><div>print $ 1 + 1</div><div>```</div>"
             ],
             "flags": 0,
             "guid": "ptLyF(<S>z",
@@ -757,8 +757,8 @@
             "__type__": "Note",
             "data": "",
             "fields": [
-                "```haskell<div>putStrLn (show (1 + 1))<br><br>putStrLn (show $ 1 + 1)<br><br>putStrLn $ show (1 + 1)<br><br>putStrLn $ show $ 1 + 1<br></div><div>```</div><div><br></div><div>Do all of the above eval do the same thing?</div>",
-                "No, all of those are different syntaxes to express the same thing, and produce the same result."
+                "```haskell<div>putStrLn (show (1 + 1))<br><br>putStrLn (show $ 1 + 1)<br><br>putStrLn $ show (1 + 1)<br><br>putStrLn $ show $ 1 + 1<br></div><div>```</div><div><br></div><div>Do all of the above eval to the same thing?</div>",
+                "Yes, they do. All of those variants are different syntaxes to express the same thing, and produce the same result."
             ],
             "flags": 0,
             "guid": "x=(K.c&RnT",
@@ -773,8 +773,8 @@
             "__type__": "Note",
             "data": "",
             "fields": [
-                "`2 * (2 ^ 2)` works. Why does neither `2 * 2 $ ^ 2` or `2 * 2 $ (^2)` work?",
-                "Because `$` is being used in the wrong place and `2 *` mus t be turned into a partially applied function. `(2*) $ 2 ^ 2` is the correct syntax for this."
+                "Why do neither work?<div><br></div><div>```</div><div>2 * 2 $ ^ 2</div><div>2 * 2 $ (^2)</div><div>```</div>",
+                "Basically, `$` needs a function on the left, and params on the right. `2 * 2` is 4, and you can't apply 4 to either `^ 2` or `(^2)`.<div><br></div><div>If you do `:info $`, you'll see that `$` takes a function as the first argument, and it is infixr. `2 * 2` is not a function, because it is 4, and you can't do `4 $ &lt;something&gt;`.</div>"
             ],
             "flags": 0,
             "guid": "sj}-fiY-%5",
@@ -793,6 +793,21 @@
             ],
             "flags": 0,
             "guid": "q_a{UOfNVC",
+            "newlyAdded": false,
+            "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
+            "tags": [
+                "ch02"
+            ]
+        },
+        {
+            "__type__": "Note",
+            "data": "",
+            "fields": [
+                "Why does `(-1) 2` produce an error instead of being a case of sectioning, like `(+1) 2`, for instance?",
+                "Because enclosing a value in parens with the `-` before the value is indicates to GHCi that we want to apply the negation function `-` to an argument. In this case, it is not treated as subtraction, but as negation. So, negating 1 produces `-1`, and `-1` is not a function that can be applied to 2.<div><br></div><div>Use `(subtract 1) 2` to create the sectioning. Also, `(1-) 2` is fine because `-` is on the right side, where it can't possibly be treated as negation, so GHCi understands it means subtraction.</div>"
+            ],
+            "flags": 0,
+            "guid": "Cg~akcgy~.",
             "newlyAdded": false,
             "note_model_uuid": "61900fc0-3d23-11ea-ad83-abf72a9860b6",
             "tags": [

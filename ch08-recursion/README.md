@@ -1,5 +1,29 @@
 # Recursion - Chapter 08
 
+
+<!-- vim-markdown-toc GitLab -->
+
+* [Intermission: Exercise](#intermission-exercise)
+* [Chapter Exercises](#chapter-exercises)
+  * [Review of types](#review-of-types)
+    * [01](#01)
+    * [02](#02)
+    * [03](#03)
+    * [04](#04)
+  * [Reviewing currying](#reviewing-currying)
+    * [01](#01-1)
+    * [02](#02-1)
+    * [03](#03-1)
+    * [04](#04-1)
+  * [Recursion](#recursion)
+    * [01](#01-2)
+    * [02](#02-2)
+    * [03](#03-2)
+  * [Fixing divBy](#fixing-divby)
+  * [wordNumber](#wordnumber)
+
+<!-- vim-markdown-toc -->
+
 ## Intermission: Exercise
 
 Page 282.

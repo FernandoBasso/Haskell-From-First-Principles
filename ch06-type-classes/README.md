@@ -1,6 +1,54 @@
 # Type Classes - Chapter 06
 
 
+<!-- vim-markdown-toc GitLab -->
+
+* [Exercises: Eq instances](#exercises-eq-instances)
+  * [01 TisAnInteger](#01-tisaninteger)
+  * [02 TwoIntegers](#02-twointegers)
+  * [03 StringOrInt](#03-stringorint)
+  * [04 Pair](#04-pair)
+  * [05 Tuple](#05-tuple)
+  * [06 Which](#06-which)
+  * [07 EitherOr](#07-eitheror)
+* [Exercises: Will they work?](#exercises-will-they-work)
+  * [01 max and length](#01-max-and-length)
+  * [02 compare](#02-compare)
+  * [03 compare](#03-compare)
+  * [04 >](#04-)
+* [Chapter Exercises](#chapter-exercises)
+  * [Multiple choice](#multiple-choice)
+    * [01 Eq class](#01-eq-class)
+    * [02 Ord type class](#02-ord-type-class)
+    * [03 Ord > operator](#03-ord-operator)
+    * [04 divMod](#04-divmod)
+  * [Does it typecheck](#does-it-typecheck)
+    * [01 IO () Person](#01-io-person)
+    * [02 Mood](#02-mood)
+    * [03 settleDown Mood](#03-settledown-mood)
+    * [04 Sentence](#04-sentence)
+  * [Given a datatype declaration, what can we do?](#given-a-datatype-declaration-what-can-we-do)
+    * [01](#01)
+    * [02](#02)
+    * [03](#03)
+    * [04](#04)
+  * [Match The Types](#match-the-types)
+    * [01 Float a](#01-float-a)
+    * [02 Float Num](#02-float-num)
+    * [03 Float Fractional](#03-float-fractional)
+    * [04 Float RealFrac](#04-float-realfrac)
+    * [05 a Ord](#05-a-ord)
+    * [06 a Int](#06-a-int)
+    * [07 Int a](#07-int-a)
+    * [08 Int Num](#08-int-num)
+    * [09 Ord [a] [Int]](#09-ord-a-int)
+    * [10 [Char] to Ord a => [a]](#10-char-to-ord-a-a)
+    * [11 mySort [Char]](#11-mysort-char)
+  * [Type-Known-Do Two : Electric typealoo](#type-known-do-two-electric-typealoo)
+    * [01 chk](#01-chk)
+    * [02 arith](#02-arith)
+
+<!-- vim-markdown-toc -->
 
 ## Exercises: Eq instances
 

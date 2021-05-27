@@ -1,6 +1,30 @@
 # Strings - Chapter 3
 
-[TOC]
+
+<!-- vim-markdown-toc GitLab -->
+
+* [Exercises: Scope](#exercises-scope)
+  * [01](#01)
+  * [02](#02)
+  * [03](#03)
+  * [04](#04)
+* [Exercises: Syntax Errors](#exercises-syntax-errors)
+  * [01](#01-1)
+  * [02](#02-1)
+  * [03](#03-1)
+* [Chapter Exercises](#chapter-exercises)
+  * [Reading syntax](#reading-syntax)
+    * [01](#01-2)
+    * [02](#02-2)
+  * [Building functions](#building-functions)
+    * [01](#01-3)
+    * [02](#02-3)
+    * [03](#03-2)
+    * [04](#04-1)
+    * [05](#05)
+    * [06](#06)
+
+<!-- vim-markdown-toc -->
 
 ## Exercises: Scope
 

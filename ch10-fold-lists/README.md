@@ -1,5 +1,34 @@
 # Folding Lists - Chapter 10
 
+
+<!-- vim-markdown-toc GitLab -->
+
+* [Exercises: Understanding folds](#exercises-understanding-folds)
+  * [01](#01)
+  * [02](#02)
+  * [03](#03)
+  * [04](#04)
+  * [05](#05)
+    * [a](#a)
+    * [b](#b)
+    * [c](#c)
+    * [d](#d)
+    * [e](#e)
+    * [f](#f)
+    * [g](#g)
+    * [h](#h)
+    * [i](#i)
+* [Exercises: Database processing](#exercises-database-processing)
+* [Scans exercises](#scans-exercises)
+* [Warm-up and review](#warm-up-and-review)
+  * [01](#01-1)
+  * [02](#02-1)
+  * [03](#03-1)
+  * [Rewriting functions using folds](#rewriting-functions-using-folds)
+  * [The End](#the-end)
+
+<!-- vim-markdown-toc -->
+
 ## Exercises: Understanding folds
 
 Page 365.

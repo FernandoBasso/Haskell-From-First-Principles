@@ -1,6 +1,50 @@
 # More Functional Patterns - Chapter 07
 
 
+<!-- vim-markdown-toc GitLab -->
+
+* [Exercises: Grab bag](#exercises-grab-bag)
+  * [01](#01)
+  * [02](#02)
+  * [03](#03)
+    * [a](#a)
+    * [b](#b)
+    * [c](#c)
+* [Exercise: Variety Pack](#exercise-variety-pack)
+  * [01](#01-1)
+  * [02](#02-1)
+* [Exercises: Case practice](#exercises-case-practice)
+  * [01](#01-2)
+  * [02](#02-2)
+  * [03](#03-1)
+* [Exercises: Artful dodgy](#exercises-artful-dodgy)
+* [Exercises: Guard duty](#exercises-guard-duty)
+  * [01](#01-3)
+  * [02](#02-3)
+  * [03](#03-2)
+  * [04](#04)
+  * [05](#05)
+  * [06](#06)
+  * [07](#07)
+    * [08](#08)
+* [Chapter exercises](#chapter-exercises)
+  * [Multiple Choice](#multiple-choice)
+    * [01](#01-4)
+    * [02](#02-4)
+    * [03](#03-3)
+    * [04](#04-1)
+    * [05](#05-1)
+  * [Let’s write code](#lets-write-code)
+    * [01](#01-5)
+      * [a](#a-1)
+      * [b](#b-1)
+      * [c](#c-1)
+    * [02](#02-5)
+    * [03](#03-4)
+    * [04, 05](#04-05)
+    * [06](#06-1)
+
+<!-- vim-markdown-toc -->
 
 ## Exercises: Grab bag
 

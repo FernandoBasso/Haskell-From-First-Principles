@@ -1,5 +1,63 @@
 # Lists - Chapter 09
 
+
+<!-- vim-markdown-toc GitLab -->
+
+* [Exercise: EnumFromTo](#exercise-enumfromto)
+* [Exercises: Thy fearful symmetry](#exercises-thy-fearful-symmetry)
+  * [01](#01)
+  * [02](#02)
+  * [03](#03)
+* [Exercises: Comprehend thy lists](#exercises-comprehend-thy-lists)
+* [Exercises: Square Cube](#exercises-square-cube)
+* [Exercises: Bottom madness](#exercises-bottom-madness)
+  * [01](#01-1)
+  * [02](#02-1)
+  * [03](#03-1)
+  * [04](#04)
+  * [05](#05)
+  * [06](#06)
+  * [07](#07)
+  * [08](#08)
+  * [09](#09)
+  * [10](#10)
+* [Intermission: Is it in normal form?](#intermission-is-it-in-normal-form)
+  * [01](#01-2)
+  * [02](#02-2)
+  * [03](#03-2)
+  * [04](#04-1)
+  * [05](#05-1)
+  * [06](#06-1)
+  * [07](#07-1)
+* [Exercises: More bottoms](#exercises-more-bottoms)
+  * [01](#01-3)
+  * [02](#02-3)
+  * [03](#03-3)
+  * [04](#04-2)
+  * [05](#05-2)
+    * [a](#a)
+    * [b](#b)
+    * [c](#c)
+  * [06](#06-2)
+* [Exercises: Filtering](#exercises-filtering)
+  * [01](#01-4)
+  * [02](#02-4)
+  * [03](#03-4)
+* [Zipping exercises](#zipping-exercises)
+  * [01, 02, 03](#01-02-03)
+* [Chapter Exercises](#chapter-exercises)
+  * [Data.Char](#datachar)
+    * [01](#01-5)
+    * [02](#02-5)
+    * [03](#03-5)
+    * [04](#04-3)
+    * [05, 06](#05-06)
+  * [Ciphers](#ciphers)
+  * [Writing your own standard functions](#writing-your-own-standard-functions)
+* [The End](#the-end)
+
+<!-- vim-markdown-toc -->
+
 ## Exercise: EnumFromTo
 
 Page 306.

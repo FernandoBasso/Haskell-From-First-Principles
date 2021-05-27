@@ -1,5 +1,34 @@
 # Basic Datatypes - Chapter 4
 
+
+<!-- vim-markdown-toc GitLab -->
+
+* [Exercises: Mood Swing](#exercises-mood-swing)
+* [Exercises: Find the Mistakes](#exercises-find-the-mistakes)
+* [Chapter Exercises](#chapter-exercises)
+  * [01 length](#01-length)
+  * [02](#02)
+  * [03 length division](#03-length-division)
+  * [04](#04)
+  * [05](#05)
+  * [06](#06)
+  * [07 will they work?](#07-will-they-work)
+  * [08 palindromoe](#08-palindromoe)
+  * [09 abs of a num](#09-abs-of-a-num)
+  * [10 tuples](#10-tuples)
+  * [Correcting Syntax](#correcting-syntax)
+    * [01 fix syntax and uppercase fn name](#01-fix-syntax-and-uppercase-fn-name)
+    * [02 uppercase binding name](#02-uppercase-binding-name)
+    * [03 A not in scope](#03-a-not-in-scope)
+  * [Match the function names to their types](#match-the-function-names-to-their-types)
+    * [01 type of `show'](#01-type-of-show)
+    * [02 Type of `(==)'](#02-type-of-)
+    * [03 Type of `fst'](#03-type-of-fst)
+    * [04 type of `(+)'](#04-type-of-)
+* [The End](#the-end)
+
+<!-- vim-markdown-toc -->
+
 ## Exercises: Mood Swing
 
 Page 90.

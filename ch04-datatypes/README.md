@@ -3,8 +3,14 @@
 
 <!-- vim-markdown-toc GitLab -->
 
-* [Exercises: Mood Swing](#exercises-mood-swing)
-* [Exercises: Find the Mistakes](#exercises-find-the-mistakes)
+* [Basic Data Types](#basic-data-types)
+* [What are Types?](#what-are-types)
+* [Anatomy of a data declaration](#anatomy-of-a-data-declaration)
+* [Numeric Types](#numeric-types)
+  * [Exercises: Mood Swing](#exercises-mood-swing)
+* [Comparing Values](#comparing-values)
+  * [Exercises: Find the Mistakes](#exercises-find-the-mistakes)
+* [Go On and Bool Me](#go-on-and-bool-me)
 * [Chapter Exercises](#chapter-exercises)
   * [01 length](#01-length)
   * [02](#02)
@@ -25,17 +31,100 @@
     * [02 Type of `(==)'](#02-type-of-)
     * [03 Type of `fst'](#03-type-of-fst)
     * [04 type of `(+)'](#04-type-of-)
+  * [Question about data constructors vs char](#question-about-data-constructors-vs-char)
 * [The End](#the-end)
 
 <!-- vim-markdown-toc -->
 
-## Exercises: Mood Swing
+## Basic Data Types
 
-Page 90.
+Types are also called data types.
 
-1: `Mood`
+* types
+* type constructors
+* data constructors
+* type signatures
+* type classes
 
-2: `Blah` and `Woot`.
+## What are Types?
+
+Expressions reduce to values when evaluated. Every value has a type. Types are how we group together of sets of values. A certain value has a type, which means that value belong to that type.
+
+## Anatomy of a data declaration
+
+DATA DECLARATIONS are how DATATYPES are defined.
+
+Type signatures live in the **type level** of our code. Values and expressions live at the **term level**.
+
+When you are reading or writing type signatures, the type names or type constructors are what you use.
+
+Data constructors are the values that inhabit the type they are defined in. They are the values that show up in your code at the term level instead of the type level. By term level, we mean they are the values as they appear in your code or the values that your code evaluates to.
+
+```
+data Bool = False | True
+```
+
+To define a type/datatype, we use the `data` keyword. `Bool` is the type constructor and the name of the type. `False` and `True` are the data constructors for the type `Bool`. `True` and `False` are the values that inhabit (belong to) the `Bool` type.
+
+See datatype definition for built-in types:
+
+```
+:info <TypeConstructor>
+:info Bool
+:info String
+:Info Char
+:info 1
+```
+
+If we query the `:type` of the function `not`, we get back the type constructor (datatype name) it consumes and produces, but when we apply the function then we use data constructors (the values):
+
+```
+λ> :type not
+not :: Bool -> Bool
+λ> :info Bool
+data Bool = False | True
+λ> not True
+False
+λ> not False
+True
+```
+
+![Haskell Data Type and Data Constructor](./haskell-typeconstructor-dataconstructor.png)
+
+
+
+## Numeric Types
+
+Integral Numbers:
+
+* `Int`, fixed precision, has upper and lower bounds, cannot be arbitrarily large or small.
+* `Integer`, arbitrarily large and small numbers.
+* `Word`, whole numbers, integers >= 0.
+
+Fractional numbers:
+
+* `Float` (not fixed-point or fixed-precision), but rather, *floating* point. Floats can shift how many bits it uses before and after the decimal point, causing inconsistencies as `0.1 + 0.2` producing `0.30000000000000004` instead of simply `0.3`. Avoid this type.
+* `Double` has twice as many bits as `Float` but has the same problems as `Float`.
+* `Rational` is a fractional that represents a ration between two integers. It is as arbitrarily precise but not as efficient as `Scientific`.
+* `Fixed` (fixed-point or fixed-precision). `Fixed E2` can have two decimals after the decimal place. `Fixed E9` could hold up to 9 decimal digits after the point. The base library provides `E0`, `E1`, `E2`, `E3`, `E6`, `E9`, and `E12` and you can add your own resolution if necessary.
+* `Scientific` are almost arbitrary precision (unlike to hit the limit) represented using scientific notation. Stores the coefficient as an `Integer` and the exponent as an `Int`. It is [available as a library](https://hackage.haskell.org/package/scientific).
+
+All these concrete numeric types have instances of the `Num` typeclass.
+
+* `&&` is the infix operator for boolean conjunction.
+* `||` is the infix operator for boolean disjunction.
+
+Haskell does not have “if statements”. It has *if expressions*.
+
+### Exercises: Mood Swing
+
+```
+data Mood = Blah | Woot deriving Show
+```
+
+1: `Mood` is the name of the type, or the type constructor.
+
+2: `Blah` and `Woot` are the two possible data constructors we can use when something is of the `Mood` type.
 
 3: The type signature should use `Mood`, the type constructor, not `Woot`, which is a data constructor.
 
@@ -44,7 +133,7 @@ data Mood = Blah | Woot deriving Show
 
 changeMood :: Mood -> Mood
 changeMood Blah = Woot
-changeMood Woot = Blah
+changeMood Woot = Blah -- <1>
 
 -- 
 --     λ> changeMood Woot
@@ -54,17 +143,54 @@ changeMood Woot = Blah
 -- 
 ```
 
+<1> could also be `changeMood _ = Blah` because if the input is not `Blah`, it can only be `Woot`. That is, if we do not fall into the first pattern matching, the second can only the the other possible option.
+
 5: Dutifully done!
 
-## Exercises: Find the Mistakes
+If `:info <SomeType>` shows `Unbounded` it means that we can do `minBound :: ThatType`and `maxBound :: ThatType` to figure out their min and max bounds.
 
-Page 103.
+```
+λ> import GHC.Int
+λ> :info Int8
+...
+instance Bounded Int -- Defined in ‘GHC.Enum’
+...
+λ> minBound :: Int8
+-128
+λ> maxBound :: Int8
+127
+```
+
+The upper bounds of `Word` types is approximately double that of the same size `Int` types because the bit in `Int` values is used to express negative numbers is now used to signify extra positive numbers.
+
+## Comparing Values
+
+Type classes are a way to adding functionality to a type that is reusable across all the types that have instances of that type class.
+
+If `Num` has the `==` function, all concrete numeric types that have instances of `Num` can be compared.
+
+```
+λ> :type (==)
+(==) :: Eq a => a -> a -> Bool
+λ> :type (/=)
+(/=) :: Eq a => a -> a -> Bool
+```
+
+Both `==` and `/=` take arguments that have instances of the `Eq` type class.
+
+### Exercises: Find the Mistakes
 
 1. `true` is not capitalized. Make it `True`.
 2. To compare values, we use `==`, not `=` (the later is used to define things, not to compare things).
 3. This one is correct.
 4. Probably wanted double quotes around Merry and Happy. Other possibility is that they are data constructors from a typeclass that implements `Eq` and `Ord`.
 5. Cannot concatenate two lists with elements of different types. In this case, either compare two lists of numbers, or two lists of strings.
+
+## Go On and Bool Me
+
+We refer to types by their type constructor (names). We only use type constructors in type signatures and not in expressions that make up our *term level* code. Some type constructors take arguments.
+
+
 
 ## Chapter Exercises
 
@@ -260,7 +386,17 @@ D: Wrong. `a` is lacking a typeclass constraint of `Num`.
 
 
 
+### Question about data constructors vs char
+@TODO @QUESTION
+If False is one of Bool's data constructors, what is one data constructor for a character? 'z'? Why can we define something that is capitalized, like Blah and Woot and they are _values_, real data? Looks like data constructors sometimes are themselves data.
 
+gzmorell@haskell-beginners:
+
+All type and data constructors must start with uppercase letter, so 'z', z, or 1 are not valid data constructors. This obviously do not explain how Int or Char are defined inside Haskell. You can see how "magic" is done here https://tech.fpcomplete.com/haskell/tutorial/primitive-haskell
+
+NOTE: That link talks about things I do not yet understand. Read it after I finish the book.
+
+You can define your chars as "data MyChars = La | Lb | Ua | Ub" and then instance show and read to convert to/from String.
 
 
 

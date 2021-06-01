@@ -1,6 +1,5 @@
 # Basic Datatypes - Chapter 4
 
-
 <!-- vim-markdown-toc GitLab -->
 
 * [Basic Data Types](#basic-data-types)
@@ -11,6 +10,8 @@
 * [Comparing Values](#comparing-values)
   * [Exercises: Find the Mistakes](#exercises-find-the-mistakes)
 * [Go On and Bool Me](#go-on-and-bool-me)
+* [Tuples](#tuples)
+* [Lists](#lists)
 * [Chapter Exercises](#chapter-exercises)
   * [01 length](#01-length)
   * [02](#02)
@@ -135,12 +136,12 @@ changeMood :: Mood -> Mood
 changeMood Blah = Woot
 changeMood Woot = Blah -- <1>
 
--- 
+--
 --     λ> changeMood Woot
 --     Blah
 --     λ> changeMood Blah
 --     Woot
--- 
+--
 ```
 
 <1> could also be `changeMood _ = Blah` because if the input is not `Blah`, it can only be `Woot`. That is, if we do not fall into the first pattern matching, the second can only the the other possible option.
@@ -240,9 +241,7 @@ snd :: (a, b) -> b
 (900,"Yoda")
 ```
 
-
-
-Define fst and snd ourselves:
+Define `fst` and `snd` ourselves:
 
 ```
 fst' :: (,) a b -> a
@@ -261,13 +260,49 @@ The type can be either `f :: (a, b) -> a` or `f :: (,) a b -> a`.
 
 In the definition `fst' (a, b) = ...`, the `(a, b)` part is pattern matching.
 
+## Lists
+
+* Unlike tuples, all list elements must be of the same type.
+* Like tuples, lists have their own `[]` distinctive syntax which is used both in the type constructor and at the term level to express values.
+* Unlike tuples, list arity is not specified in the type and are not immutable. That is, lists do not have a specified length that is part of the the type, like in tuples.
+
+```
+λ> p = "Papuchon"
+λ> awesome = [p, "curry", ":)"]
+λ> awesome
+["Papuchon","curry",":)"]
+λ> :t awesome
+awesome :: [[Char]]
+```
+
+`awesome` is a list, and it contains lists of `Char`. `String` is a  type alias for `[Char]`, and we have a list of strings, which is a list of lists of chars, which is `[[Char]]`.
+
+`[Char]` is more specific than `[a]`, therefore, all list functions and operations valid for `[a]` are also valid for `[Char]` because the later is more specific.
+
+```
+λ> s = "The Simons"
+λ> also = ["Quake", s]
+
+λ> :type (++)
+(++) :: [a] -> [a] -> [a]
+
+λ> allAwesome = [awesome, also]
+λ> allAwesome
+[["Papuchon","curry",":)"],["Quake","The Simons"]]
+
+λ> :type allAwesome
+allAwesome :: [[[Char]]]
+
+λ> :type concat
+concat :: Foldable t => t [a] -> [a]
+
+λ> concat allAwesome
+["Papuchon","curry",":)","Quake","The Simons"]
+```
+
 ## Chapter Exercises
 
-Page 111.
-
 ### 01 length
-
-Page 112.
 
 `length` takes one argument: a list of any type. It returns a number (`Int`) which is the number of elements in the list.
 

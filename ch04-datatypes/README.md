@@ -190,7 +190,76 @@ Both `==` and `/=` take arguments that have instances of the `Eq` type class.
 
 We refer to types by their type constructor (names). We only use type constructors in type signatures and not in expressions that make up our *term level* code. Some type constructors take arguments.
 
+We use type constructors in type signatures, and data constructors at the term-level code.
 
+The type constructor `Bool` takes no arguments, but some other type constructors do take arguments.
+
+* Sum type, boolean disjunction, OR.
+* Product type, boolean conjunction, AND.
+
+```
+λ> :info || &&
+```
+
+
+
+## Tuples
+
+Tuples have a distinctive, built-in syntax that is used at both type and term levels. Tuple arity, 2-tuple (or pair), three-tuple, etc.
+
+The 2-tuple is expressed at both the type level and term level with the constructor `(,)`.
+
+Compare:
+
+```
+λ> :info Bool
+data Bool = False | True
+
+λ> :info (,)
+data (,) a b = (,) a b
+```
+
+Both use `data`. The type constructor `Bool` takes no params, while the 2-tuple type constructor `(,)` takes two, `a` and `b`, which by the way, indicate that the tuple can (but it is not required) take values of different types.
+
+`Bool` is a sum type (one or the other). `(,)` is a product type, which needs both values to construct the tuple value, meaning `(,)` is not curried by default.
+
+```
+λ> tup = ("Yoda", 900)
+
+λ> :info fst snd
+fst :: (a, b) -> a
+snd :: (a, b) -> b
+
+λ> fst tup
+"Yoda"
+λ> snd tup
+900
+
+λ> import Data.Tuple (swap)
+λ> swap tup
+(900,"Yoda")
+```
+
+
+
+Define fst and snd ourselves:
+
+```
+fst' :: (,) a b -> a
+fst' (a, b) = a
+
+snd' :: (,) a b -> b
+snd' (a, b) = b
+
+λ> fst' ("Tomb", "Raider")
+"Tomb"
+λ> snd' ("Tomb", "Raider")
+"Raider
+```
+
+The type can be either `f :: (a, b) -> a` or `f :: (,) a b -> a`.
+
+In the definition `fst' (a, b) = ...`, the `(a, b)` part is pattern matching.
 
 ## Chapter Exercises
 

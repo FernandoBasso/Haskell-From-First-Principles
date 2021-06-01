@@ -302,6 +302,8 @@ concat :: Foldable t => t [a] -> [a]
 
 ## Chapter Exercises
 
+Page 111.
+
 ### 01 length
 
 `length` takes one argument: a list of any type. It returns a number (`Int`) which is the number of elements in the list.
@@ -318,7 +320,7 @@ class Foldable (t :: * -> *) where
   	-- Defined in ‘Data.Foldable’
 ```
 
-`Foldable t => t a` means `[[]]`.
+**INFO️**: `Foldable t => t a` roughly means `[a]` (OK for this stage in the book).
 
 ### 02
 
@@ -326,9 +328,9 @@ A: 5, because the list contains five numbers.
 
 B: 3, because the list contains three two-tuples.
 
-C: 2, because `allAwesome` contains two lists (which themselves contains other lists, but `length` cares about the topmost elements, and it is two lists).
+C: 2, because `allAwesome` contains two lists (which themselves contains other lists, but `length` cares about the topmost elements, and it is two lists). Result is 2.
 
-D: 5, because `concat` _flattens_ the lists, making one single list with the three elements of `awesome` and the other two elements of `also`.
+D: 5, because `concat` _flattens_ the lists, making one single list with the three elements of `awesome` and the other two elements of `also`. Result is 5.
 
 ### 03 length division
 
@@ -347,7 +349,12 @@ Could use `div` instead because it would work for the polymorphic constant 6 and
 2
 ```
 
-While 6 is a polymorphic number, it can be "converted” to `Int`, which is the return of `lengt`. But the return of `Int` cannot be converted to a fractional type because `/` only take fractional operands.
+While 6 is a polymorphic number, it can be "converted” to `Int`, which is the return of `length`. But the return of `Int` cannot be converted to a fractional type because `/` only take fractional operands. BEWARE: Using `div` may cause loss of information (lose the decimal digits). Use `fromIntegral`:
+
+```
+λ> 8 / fromIntegral (length [1..5])
+1.6
+```
 
 ### 05
 
@@ -406,14 +413,18 @@ myAbs n = if n < 0 then -n else n
 -- 5
 ```
 
+Yeah, we can just **negate** `n` with `-`. No need to multiply it by `-1`. 💯 Read more on the [unary minus operator](https://wiki.haskell.org/Unary_operator).
+
 ### 10 tuples
 
-```haskell
+```
 f :: (a, b) -> (c, d) -> ((b, d), (a, c))
 f (a, b) (c, d) = ((b, d), (a, c))
 -- λ> f ("Lara", "Tomb") ("Croft", "Raider")
 -- (("Tomb","Raider"),("Lara","Croft"))
 ```
+
+We just pattern match on the input tuples and places each value at the expected place in the resulting value that is returned.
 
 ### Correcting Syntax
 
@@ -427,8 +438,16 @@ The name of the function has to start with a lowercase.
 
 Working solution:
 
-```haskell
+```
 f xs = w `x` 1
+  where w = length xs
+```
+
+Or use `x` in prefix position:
+
+```
+f :: [a] -> Int
+f xs = x w 1
   where w = length xs
 ```
 
@@ -442,7 +461,7 @@ Can’t use uppercase as first letter of identifiers for variables (and function
 
 #### 03 A not in scope
 
-Need a comma between a and b in the tuple param. Also,`A` is interpreted as a data constructor (because it starts with uppercase), but it is not in scope. Fix:
+Need a comma between a and b in the tuple param. Also,`A` is interpreted as a data constructor because it starts with uppercase, but it is not in scope. Fix:
 
 ```haskell
 f (a, b) = a
@@ -487,8 +506,6 @@ C: Wrong. Typeclasses are capitalized.
 D: Correct. Properly return the typeclass-constrained `a`.
 
 D: Wrong. `a` is lacking a typeclass constraint of `Num`.
-
-
 
 ### Question about data constructors vs char
 @TODO @QUESTION

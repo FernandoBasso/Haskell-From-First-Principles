@@ -1,6 +1,5 @@
 # Types - Chapter 05
 
-
 <!-- vim-markdown-toc GitLab -->
 
 * [What are types for?](#what-are-types-for)
@@ -13,6 +12,16 @@
   * [Manual currying and uncurrying](#manual-currying-and-uncurrying)
   * [Currying and uncurrying existing functions](#currying-and-uncurrying-existing-functions)
   * [Sectioning](#sectioning)
+  * [Exercises](#exercises)
+    * [Exercise 1](#exercise-1)
+    * [Exercise 2](#exercise-2)
+    * [Exercise 3](#exercise-3)
+    * [Exercise 4](#exercise-4)
+    * [Exercise 5](#exercise-5)
+    * [Exercise 6](#exercise-6)
+    * [Exercise 7](#exercise-7)
+    * [Exercise 8](#exercise-8)
+    * [Exercise 9](#exercise-9)
 * [Polymorphism](#polymorphism)
   * [Polymorphic constants](#polymorphic-constants)
   * [Question about fromIntegral](#question-about-fromintegral)
@@ -321,54 +330,66 @@ Currying
 
 It looks like functions take multiple arguments in Haskell, but the truth is that we have a chain of nested functions: all functions in Haskell take one argument and return one result. When a function appear to take multiple functions, in truth, it takes one argument and returns another function that takes the next argument, and so on until all the arguments have been consumed and the final result is produced.
 
-Each arrow ‘->’ in a type signature represents one argument and one result, with the final type being the final result.
+Each arrow `(->)`in a type signature represents one argument and one result, with the final type being the final result.
 
+```
 data (->) a b
+```
 
-In ‘(+) :: Num a => a -> a -> a’, the ‘a -> a -> a’ represent successive function applications.
+In `(+) :: Num a => a -> a -> a’, the ‘a -> a -> a` represent successive function applications.
 
-The way the type constructor for functions, (->), is defined makes currying the default in Haskell. This is because it is an infix operator and right associative. Because it associates to the right, types are implicitly parenthesized like so:
+The way the type constructor for functions, `(->)`, is defined makes currying the default in Haskell. This is because it is an infix operator and right associative. Because it associates to the right, types are implicitly parenthesized like so:
 
+```
 f :: a -> a -> a
+```
 
 is the same as 
 
+```
 f :: a -> (a -> a)
+```
 
 and
 
+```
 map :: (a -> b) -> [a] -> [b]
+```
 
 is the same as
 
+```
 map :: (a -> b) -> ([a] -> [b])
+```
 
 The association here, or grouping into parentheses, is not to control precedence or order of evaluation; it only serves to group the parameters into argument and result, since there can only be one argument and one result per arrow. Since all the arrows have the same precedence, the associativity does not change the precedence or order of evaluation.
 
 Explicit parenthesization, as when an input parameter is itself a function (such as in map, above), may be used to indicate order of evaluation, but the implicit associativity of the function type does not mean the inner or final set of parentheses, i.e., the result type, evaluates first. Application is evaluation; in other words, the only way to evaluate anything is by applying functions, and function application is left associative. So, the leftmost, or outermost, arguments will be evaluated first.
 
 ### Partial Application
-[DATETIME: Mon, 2020-01-27 17:04]
-
 add :: Integer -> Integer -> Integer
 add n m = n + m
 
+```
 λ> add1 = add 1
 λ> :type add1
 add1 :: Integer -> Integer
 λ> add1 10
 11
+```
 
 ‘add’ takes _one_ argument and returns a function that takes _one_ argument which then returns the final result.
 
-Partially applying subtraction and division functions is trickier because they are not is not associative and commutative by default (link).
+Partially applying subtraction and division functions is trickier because they are not is not associative and commutative by default ([link](http://mathforum.org/library/drmath/view/72185.html)).
 
+```
 sub :: Integer -> Integer -> Integer
 sub dividend divisor = dividend - divisor
 
 λ> subFrom5 = sub 5
 λ> subFrom5 1
 4
+```
 
 When we apply ‘sub’ to 5, 5 is the dividend. But we want to pass the amount to subtract as the first argument, so we can have functions like ‘sub1’ or ‘sub10’. For that we can use sectioning:
 
@@ -391,28 +412,46 @@ NOTE that we do the sectioning placing the operator function to the left, so for
 ### Manual currying and uncurrying
 To uncurry we unest two functions and replace them with a tuple of two values.
 
-Curried and uncurried ‘(+)’:
+Curried and uncurried`(+)`:
 
+```
 (+) :: Num a => a -> a -> a
 (+) :: Num a => (a, a) -> a
+```
 
 * Uncurried functions: One function, many arguments.
 * Curried functions: Many functions, one argument apiece.
 
+Both lambdas are curried. `f` leverages automatic haskell currying, while `g` does manual currying by nesting lambdas.
+
+```
+f :: Int -> Int -> Int
+f = \x y -> (+) x y
+
+g :: Int -> Int -> Int
+g = \x -> \y -> (+) x y
+```
+
+
+
 ### Currying and uncurrying existing functions
+```
 λ> curry f a b = f (a, b)
 λ> :t curry
 curry :: ((a, b) -> t) -> a -> b -> t
+```
 
-In ‘((a, b) -> t)’, the outer parens mean a function that returns ‘t’. The function takes two params ‘a’ and ‘b’. The inner set of params with the tuple ‘(a, b)’ mean the fuction really takes two params. It is not curried. It requires both params at once.
+In `((a, b) -> t)`, the outer parens mean a function that returns `t`. The function takes two params ‘a’ and ‘b’. The inner set of params with the tuple `(a, b)` mean the function really takes two params. It is not curried. It requires both params at once.
 
 ‘f’ takes ‘a’ and ‘b’. The return type is implicit. A function must return something, in this case, some type ‘t’.
 
 curry takes a function that expects two “curried params” and turns it into a function that must be applied to a tuple of those two params, effectively making it require the two params at once, in one go.
 
+```
 λ> uncurry f (a, b) = f a b
 λ> :type uncurry
 uncurry :: (t1 -> t2 -> t3) -> (t1, t2) -> t3
+```
 
 A function ‘f’ that requires two params at once (because of the tuple ‘(a, b)’ and produces a function that accepts one param at a time.
 
@@ -421,15 +460,18 @@ The term sectioning specifically refers to the partial application of infix oper
 
 The side of the operator makes no difference when the function is commutative:
 
+```
 λ> addX = (+ 1)
 λ> addY = (1 +)
 λ> addX 1
 2
 λ> addY 1
 2
+```
 
 But it does make a difference when the function is not commutative:
 
+```
 λ> overTwo = (/ 2)
 λ> twoOver = (2 /)
 λ> overTwo 1
@@ -465,6 +507,93 @@ But it does make a difference when the function is not commutative:
 False
 λ> contains3 [1, 2, 3, 4]
 True
+```
+
+### Exercises
+
+Page 137.
+
+#### Exercise 1
+
+```
+λ> f :: a -> a -> a -> a; f = undefined
+
+λ> :type f 'x'
+f 'x' :: Char -> Char -> Char
+```
+
+#### Exercise 2
+
+```
+λ> g :: a -> b -> c -> b; g = undefined
+
+λ> :type g 0 'c' "woot"
+g 0 'c' "woot" :: Char
+```
+
+#### Exercise 3
+
+```
+λ> h :: (Num a, Num b) => a -> b -> b; h = undefined
+λ> :type h 1.0 2
+h 1.0 2 :: Num b => b
+```
+
+#### Exercise 4
+
+```
+λ> h :: (Num a, Num b) => a -> b -> b; h = undefined
+λ> :type h 1 (5.5 :: Double)
+h 1 (5.5 :: Double) :: Double
+```
+
+#### Exercise 5
+
+```
+jackal :: (Ord a, Eq b) => a -> b -> a
+jackal = undefined
+
+λ> :type jackal "keyboard" "has the word jackal in it"
+jackal "keyboard" "has the word jackal in it" :: [Char]
+```
+
+#### Exercise 6
+
+```
+λ> jackal :: (Ord a, Eq b) => a -> b -> a; jackal = undefined
+λ> :type jackal "keyboard"
+jackal "keyboard" :: Eq b => b -> [Char]
+```
+
+#### Exercise 7
+
+```
+λ> kessel :: (Ord a, Num b) => a -> b -> a; kessel = undefined
+λ> :type kessel 1 2
+kessel 1 2 :: (Ord a, Num a) => a
+```
+
+`a` is `Ord a` in the type definition, but when we apply `kessel` to 1, the compiler must infer that `a` is also some kind of number, thus, `a` becomes `(Ord a, Num a)`.
+
+#### Exercise 8
+
+```
+λ> kessel :: (Ord a, Num b) => a -> b -> a; kessel = undefined
+λ> :type kessel 1 (2 :: Integer)
+kessel 1 (2 :: Integer) :: (Ord a, Num a) => a
+```
+
+We said 2 is Integer. 1 is not required to be any of the concrete numeric types, so the compiler infers it to be constrained by the `Num` type class, but not any more specific than that.
+
+#### Exercise 9
+
+```
+λ> kessel :: (Ord a, Num b) => a -> b -> a; kessel = undefined
+λ> :type kessel (1 :: Integer) 2
+kessel (1 :: Integer) 2 :: Integer
+```
+
+We explicitly told the compiler that 1 is an Integer, so `a` input is `Integer`. The output `a` must be `Integer` 🙂.
 
 Polymorphism
 ------------

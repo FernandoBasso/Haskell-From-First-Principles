@@ -109,6 +109,15 @@
 
 <!-- vim-markdown-toc -->
 
+## Anki Tags
+
+* hffp (short  for Haskell From First Principles)
+* ch05 (short for Chapter 05)
+
+
+
+
+
 ## What are types for?
 
 System F in 1970s → Haskell (recursion, Hindley-Milner type inference.
@@ -608,7 +617,9 @@ Two categories of polymorphism:
 * parametric polymorphism (variables, fully polymorphic).
 * constrained polymorphism (type class, ad-hoc polymorphism). Implemented with type classes.
 
+```
 id :: a -> a
+```
 
 Maximally polymorphic signature for ‘id’. Any type is allowed.
 

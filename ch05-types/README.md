@@ -1080,37 +1080,60 @@ Page 150.
 
 #### 01 type of [a]
 
-C.
+“C” is correct.
 
 #### 02 type [[a]] -> [a]
 
-A.
+“A” is correct.
 
 #### 03 type [a] -> Int -> a
 
-B.
+“B” is correct.
 
 #### 04 type (a, b) -> a
 
-C.
+“C” is correct.
 
 ### Determine the type
 
 Page 151.
 
+Disable *monomorphism restriction* to allow top-level declarations to have a non-concrete type:
+
+```
+{-# LANGUAGE NoMonomorphismRestriction #-}
+n = 1
+```
+
+Without the pragma:
+
+```
+λ> :type n
+n :: Integer
+```
+
+With the pragma:
+
+```
+λ> :type n
+n :: Num p => p
+```
+
+
+
 #### 01 values and types returned
 
-A: 54, `Num a`.
+A: 54, `Num a => a`.
 
 B: `(0, "doge")`, a tuple of `Num a => (a, [Char])`.
 
-C: `(0, "doge")`, a tuple of `(Integer, [Char])`. Not that the type class constraint is gone because `Integer` is a concrete type, and was set explicitly.
+C: `(0, "doge")`, a tuple of `(Integer, [Char])`. The type class constraint is gone because `Integer` is a concrete type, and was set explicitly.
 
 D: `False`, return type is `Bool`.
 
-E: 5, return is `Int`.
+E: 5, return type is `Int`.
 
-F: `False`, return is `Bool`.
+F: `False`, return type is `Bool`.
 
 #### 02 type of w
 

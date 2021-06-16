@@ -1156,9 +1156,11 @@ It is `z :: Num a => a -> a`. The compiler sees nothing hinting that the param a
 
 #### 04 type of f
 
-It is `f :: Fractional a => a -> a`. Again, no information can be inferred that could lead to a more concrete type, but because of `(/)`, it has to be `Fractional` since `(/)` is defined in the `Fractional` typeclass (and not in `Num`, for instance).
+It is `f :: Fractional a => a -> a`. Again, no information can be inferred that could lead to a more concrete type, but because of `(/)`, it has to be `Fractional` since `(/)` is defined in the `Fractional` typeclass (and not in `Num`).
 
-#### 05 type of f ++
+`Fractional` is less polymorphic than `Num`, but still polymorphic.
+
+#### 05 type of f (++)
 
 It is `f :: [Char]` because `++` is used to join lists, and we are passing the concrete type of `Char` for the list elements, so the compile figures it is a list of concrete type, a list of `Char`.
 
@@ -1170,9 +1172,11 @@ Page 152.
 
 The first line compiles and produces an irreducible expression. We cannot then get that value (which is not a function by the way) and attempt to apply it to `$ 10`. So, the second line does not compile. `bigNum` is a number, and we can't apply a number to other expressions.
 
+We apply a function to some expression. We do not apply non-function expressions to some expression.
+
 #### 02 print
 
-Yes, it does.
+Yes, it does. We can `print` and store the printed/returned value in a variable. We can also store functions in variables, so, `x "world"` is just `print "world"`.
 
 #### 03 (+) function
 
@@ -1190,7 +1194,7 @@ The choices are: a fully polymorphic type variable, a constrained polymorphic ty
 
 #### 01 Num a b Int
 
-constrained polymorphic, fully polymorphic, concrete, concrete
+Constrained polymorphic `a`, fully polymorphic `b`, concrete type constructor `Int`, concrete type constructor `Int`.
 
 #### 02 zed blah
 
@@ -1198,13 +1202,15 @@ fully polymorphic, concrete, concrete.
 
 `Zed` and `Blah` are concrete (and not constrained polymorphic) because they are not accompanied by a variable, like `Zed a =>` and `Blah b =>`.
 
+Lowercase variables are type variables. Fully polymorphic when not constrained by a type class, constrained polymorphic (ad-hoc) when constrained by a type class.
+
 #### 03 Enum a b C
 
-fully polymorphic, constrained polymorphic, concrete.
+Fully polymorphic `a`, constrained polymorphic `b`, concrete type constructor `C`.
 
 #### 04 f g C
 
-fully polymorphic, fully polymorphic, concrete
+Fully polymorphic `f`, fully polymorphic `g`, concrete type constructor `C`.
 
 ### Write a type signature
 
@@ -1244,6 +1250,19 @@ fnS (x, y) = y
 ```
 
 ### Given a type, write a function
+
+```
+myFunc :: (x -> y)
+       -> (y -> z)
+       -> c
+       -> (a, x)
+       -> (a, z)
+
+myFunc xToY yToZ _ (a, x) = (a, (yToZ (xToY x)))
+
+-- Using one less pair of parenthesis in favor of $:
+myFunc' xToY yToZ _ (a, x) = (a, (yToZ $ xToY x))
+```
 
 Page 154.
 
@@ -1314,12 +1333,26 @@ Looks like a function that would convert from one type to another.
 
 #### 07 ignore fn param
 
-```haskell
+```
 a :: (a -> c) -> a -> a
 a xToY x = x
 ```
 
-Takes a function as the first param but simply ignores it, just returning the second param.
+Takes a function as the first param but simply ignores it, just returning the second param. Could also be:
+
+```
+a :: (a -> c) -> a -> a
+a _ a = a
+```
+
+Could use it like this:
+
+```
+λ> a (+) 1
+1
+```
+
+A function must be provided but it is ignored.
 
 #### 08 aToB
 
@@ -1327,6 +1360,8 @@ Takes a function as the first param but simply ignores it, just returning the se
 a' :: (a -> b) -> a -> b
 a' xToY x = xToY x
 ```
+
+We have to convert the input `a` to `b`, which is precisely what the `(a -> b)` function in the signature does!
 
 ### Fix it
 

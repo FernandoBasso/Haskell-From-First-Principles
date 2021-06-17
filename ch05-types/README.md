@@ -1451,11 +1451,16 @@ g = undefined
 
 h :: Int -> Char
 h i = g (f i)
+h' i = g $ f n
 ```
 
 #### 02 A to B to C
 
 ```haskell
+data A
+data B
+data C
+
 q :: A -> B
 q = undefined
 
@@ -1463,7 +1468,10 @@ w :: B -> C
 w = undefined
 
 e :: A -> C
-e x = w (q x)
+e a = w (q a)
+
+e' :: A -> C
+e' a = w $ q a
 ```
 
 #### 03 xform, X to Y to Z

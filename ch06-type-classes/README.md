@@ -1,5 +1,18 @@
 # Type Classes - Chapter 06
 
+Unless otherwise noted, always set NoMonomorphismRestriction and warnings:
+
+In a `.hs` file:
+
+```
+{-# LANGUAGE NoMonomorphismRestriction #-}
+```
+
+In the REPL:
+
+```
+:set -Wall
+```
 
 <!-- vim-markdown-toc GitLab -->
 
@@ -57,13 +70,26 @@ Page 181.
 ### 01 TisAnInteger
 
 ```haskell
-data TisAnInteger = TisAnInteger
+data TisAnInteger = TisAn Integer
 
 instance Eq TisAnInteger where
-  (==) TisAnInteger TisAnInteger = True
+  (==) (TisAn i) (TisAn i') = i == i'
 ```
 
-It is redundant to implement a catch-all with `_` placeholder. `TisAnInteger` type has only one data constructor, which is also named `TisAnInteger`. Also, defining `==` gives us `/=` for free as well.
+It is redundant to implement a catch-all with `_` placeholder. `TisAnInteger` type has only one data constructor, which is also named `TisAn`. Also, defining `==` gives us `/=` for free as well.
+
+`TisAn` is a data constructor that takes `Integer` as arguments. Basic usage of the `Eq` instance we just created:
+
+```
+λ> (==) (TisAn 1) (TisAn 1)
+True
+
+λ> (==) (TisAn 1) (TisAn 2)
+False
+
+λ> TisAn 1 == TisAn 1
+True
+```
 
 ### 02 TwoIntegers
 
@@ -73,6 +99,21 @@ data TwoIntegers = Two Integer Integer
 instance Eq TwoIntegers where
   (==) (Two x y) (Two x' y') = (==) x x' && (==) y y'
 ```
+
+Example usage:
+
+```
+λ> (==) (Two 1 2) (Two 1 2)
+True
+
+λ> Two 1 2 == Two 1 2
+True
+
+λ> Two 1 2 == Two 1 3
+False
+```
+
+
 
 ### 03 StringOrInt
 
@@ -87,6 +128,18 @@ instance Eq StringOrInt where
   (==) _ _ = False
 ```
 
+Example usage:
+
+```
+λ> TisAnInt 1 == TisAnInt 1
+True
+
+λ> TisAString "foo" == TisAString "bar"
+False
+```
+
+
+
 ### 04 Pair
 
 ```haskell
@@ -97,6 +150,28 @@ instance Eq a => Eq (Pair a) where
     (==) x x' && (==) y y'
 ```
 
+Example usage:
+
+```
+λ> (==) (Pair 'k' 'z') (Pair 'k' 'z')
+True
+```
+
+With numbers, you may get warnings if you have `NoMonomorphismRestriction` turned on. Something like:
+
+```
+Defaulting the following constraints to type ‘Integer’
+```
+
+To avoid the warning, be explicit about the concrete numeric type you want to use:
+
+```
+λ> p1 = Pair (1 :: Word) (2 :: Word)
+λ> p2 = Pair (1 :: Word) (2 :: Word)
+λ> (==) p1 p2
+True
+```
+
 ### 05 Tuple
 
 ```haskell
@@ -105,6 +180,16 @@ data Tuple a b = Tuple a b
 instance (Eq a, Eq b) => Eq (Tuple a b) where
   (==) (Tuple x y) (Tuple x' y') =
     (==) x x' && (==) y y'
+```
+
+Example usage:
+
+```
+λ> (==) (Tuple (1 :: Int) 'k') (Tuple (1 :: Int) 'z')
+False
+
+λ> (==) (Tuple (1 :: Int) 'k') (Tuple (1 :: Int) 'k')
+True
 ```
 
 ### 06 Which
@@ -118,6 +203,18 @@ instance Eq a => Eq (Which a) where
   (==) _           _            = False
 ```
 
+Usage example:
+
+```
+λ> (==) (ThisOne (1 :: Int)) (ThisOne (1 :: Int))
+True
+
+λ> (==) (ThisOne (1 :: Int)) (ThisOne ((-1) :: Int))
+False
+```
+
+
+
 ### 07 EitherOr
 
 ```haskell
@@ -128,6 +225,27 @@ instance (Eq a, Eq b) => Eq (EitherOr a b) where
   (==) (Goodbye x) (Goodbye y) = (==) x y
   (==) _           _           = False
 ```
+
+There are some things to keep in mind about types here:
+
+```
+λ> (==) (Hello 'h') (Hello 'h')
+
+<interactive>:75:1: warning: [-Wtype-defaults]
+    • Defaulting the following constraint to type ‘()’
+        Eq b0 arising from a use of ‘==’
+    • In the expression: (==) (Hello 'h') (Hello 'h')
+      In an equation for ‘it’: it = (==) (Hello 'h') (Hello 'h')
+```
+
+To avoid the warning, tell GHCi that the type of `a` or `b` is `()`. See more [here](https://discord.com/channels/280033776820813825/505367988166197268/856151177947119667) and [here](https://stackoverflow.com/questions/57948829/chapter-6-exercise-7-haskell-from-first-principles).
+
+```
+λ> (==) (Goodbye 1) (Goodbye 1 :: EitherOr () Int)
+True
+```
+
+
 
 ## Exercises: Will they work?
 

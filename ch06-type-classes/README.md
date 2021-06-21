@@ -275,19 +275,23 @@ Page 208.
 
 #### 01 Eq class
 
-C is correct.
+C is correct: “makes equality tests possible.”
 
 #### 02 Ord type class
 
-B is correct.
+B is correct. “is a subclass of `Eq`.
 
 #### 03 Ord > operator
 
-A is correct.
+A is correct: `Ord a => a -> a -> Bool`.
 
 #### 04 divMod
 
-C is correct.
+C is correct: “the type of x is a tuple”.
+
+#### 05 Integral
+
+A is correct: “`Int` and `Integer` numbers”.
 
 ### Does it typecheck
 
@@ -306,7 +310,7 @@ printPerson person = putStrLn $ show person
 
 #### 02 Mood
 
-Does not type check. Can’t use `==` without an instance of `Ord`. Fix:
+Does not type check. Can’t use `==` without an instance of `Eq`. Fix:
 
 ```haskell
 data Mood =
@@ -351,7 +355,7 @@ Works because `Papu` derives `Eq` and `Papu`'s data constructors uses types whic
 
 #### 04
 
-Does not typecheck  because `Papu` and its data constructor types do not implement `Ord`.
+Does not typecheck  because `Papu` and its data constructor types do not implement `Ord`. Derive `(Eq, Ord)` and it should work.
 
 ### Match The Types
 
@@ -393,7 +397,7 @@ Works. We can make the function more specific.
 
 #### 10 [Char] to Ord a => [a]
 
-Works. `sort` requires `Ord => a -> [a]` and `head` requires `[a]`.
+Works. `sort` requires `Ord => a -> [a]` and `head` requires `[a]`. We made the signature generic but `a` is type class constrained by `Ord` (so `sort` works) and `head` takes a list of *any* type.
 
 #### 11 mySort [Char]
 

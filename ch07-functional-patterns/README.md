@@ -1,27 +1,24 @@
 # More Functional Patterns - Chapter 07
 
-
-<!-- vim-markdown-toc GitLab -->
-
-* [Exercises: Grab bag](#exercises-grab-bag)
-  * [01](#01)
-  * [02](#02)
+* [Exercises: Grab bag](#exercises:-grab-bag)
+  * [01 mTh](#01-mth)
+  * [02 mTh type](#02-mth-type)
   * [03](#03)
     * [a](#a)
     * [b](#b)
     * [c](#c)
-* [Exercise: Variety Pack](#exercise-variety-pack)
-  * [01](#01-1)
-  * [02](#02-1)
-* [Exercises: Case practice](#exercises-case-practice)
-  * [01](#01-2)
-  * [02](#02-2)
-  * [03](#03-1)
-* [Exercises: Artful dodgy](#exercises-artful-dodgy)
-* [Exercises: Guard duty](#exercises-guard-duty)
-  * [01](#01-3)
-  * [02](#02-3)
-  * [03](#03-2)
+* [Exercise: Variety Pack](#exercise:-variety-pack)
+  * [01](#01)
+  * [02](#02)
+* [Exercises: Case practice](#exercises:-case-practice)
+  * [01](#01)
+  * [02](#02)
+  * [03](#03)
+* [Exercises: Artful dodgy](#exercises:-artful-dodgy)
+* [Exercises: Guard duty](#exercises:-guard-duty)
+  * [01](#01)
+  * [02](#02)
+  * [03](#03)
   * [04](#04)
   * [05](#05)
   * [06](#06)
@@ -29,34 +26,30 @@
     * [08](#08)
 * [Chapter exercises](#chapter-exercises)
   * [Multiple Choice](#multiple-choice)
-    * [01](#01-4)
-    * [02](#02-4)
-    * [03](#03-3)
-    * [04](#04-1)
-    * [05](#05-1)
-  * [Let’s write code](#lets-write-code)
-    * [01](#01-5)
-      * [a](#a-1)
-      * [b](#b-1)
-      * [c](#c-1)
-    * [02](#02-5)
-    * [03](#03-4)
-    * [04, 05](#04-05)
-    * [06](#06-1)
-
-<!-- vim-markdown-toc -->
+    * [01](#01)
+    * [02](#02)
+    * [03](#03)
+    * [04](#04)
+    * [05](#05)
+  * [Let’s write code](#let’s-write-code)
+    * [01](#01)
+      * [a](#a)
+      * [b](#b)
+      * [c](#c)
+    * [02](#02)
+    * [03](#03)
+    * [04, 05](#04,-05)
+    * [06](#06)
 
 ## Exercises: Grab bag
 
-
-
-### 01
+### 01 mTh
 
 All the four versions are equivalent.
 
-### 02
+### 02 mTh type
 
-Letter D is correct.
+Letter D is correct. Nothing is forcing the compiler to give a concrete type to the parameters. `Num a` is still the most polymorphic possible.
 
 ### 03
 
@@ -82,7 +75,8 @@ add5 = \x -> \y -> (+) 5 (if x > y then y else x)
 #### c
 
 ```haskell
-myFlip f x y = f y x
+mflip :: (Num a, Num b, Num c) => (a -> b -> c) -> b -> a -> c
+mflip f x y = f y x
 ```
 
 

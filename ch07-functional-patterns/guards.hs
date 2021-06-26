@@ -1,4 +1,5 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
+import GHC.Int (Int8)
 
 myAbs :: Integer -> Integer
 myAbs x
@@ -36,3 +37,26 @@ avgGrade x
   | y >= 0.59 = 'D'
   | y <  0.59 = 'F'
   where y = (/) x 100
+
+
+--
+-- Takes list whose elements can be compared with `==` (from `Eq`).
+--
+pal :: Eq a => [a] -> Bool
+pal xs
+  | (==) (reverse xs) xs = True
+  | otherwise            = False
+--
+-- λ> pal [1, 2, 1]
+-- True
+--
+-- λ> pal "racecar"
+-- True
+--
+
+numbers :: Integer -> Int8
+numbers x
+  | (<) x 0   = -1
+  | (==) x 0  = 0
+  | (>) x 0   = 1
+

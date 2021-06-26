@@ -1,5 +1,9 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
+--
+-- **IMPORTANT**: Remember that when ordering things, the data constructors on
+-- the left are considered “less than” the data constructors on the right.
+--
 data Employee =
   Coder | Manager | Veep | CEO
   deriving (Eq, Ord, Show)
@@ -18,7 +22,6 @@ employeeRank f e e' =
     GT -> reportBoss e e'
     EQ -> putStrLn "Neither is boss"
     LT -> (flip reportBoss) e e'
-
 
 myCompare :: Employee -> Employee -> Ordering
 myCompare Coder Coder = EQ

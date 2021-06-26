@@ -27,3 +27,4 @@ main = do
   print (negate (add1 0))
   print ((negate . add1) 0)
   print ((add1 . add1 . add1 . negate . add1) 0)
+

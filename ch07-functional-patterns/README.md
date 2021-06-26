@@ -91,7 +91,7 @@ a. `k :: (a, b) -> a`
 
 b. `k2 :: [Char]`
 
-c. `k3` will.
+c. `k1` and `k3` will.
 
 ### 02
 
@@ -136,6 +136,51 @@ nums x =
     GT -> 1
     EQ -> 0
 ```
+
+## Parenthesization and Associativity of (->)
+
+```
+returnLast :: a -> b -> c -> d -> d
+returnLast _ _ _ d = d
+```
+
+Parenthesizing the type signature:
+
+```
+returnLast' :: a -> (b -> (c -> (d -> d)))
+returnLast' _ _ _ d = d
+```
+
+It takes `a` and returns a function which takes some `b` and returns a function that takes `c` which in turn returns a function that takes `d` and finally returns `d`.
+
+The error “The equation(s) for fn have n arguments but its type *some type* has only one” means the function actual parameters like `f x y z = ...` but the type signature implies only one parameter is taken.
+
+```
+f :: (((a -> b) -> c) -> d) -> d
+f x y w z = z
+
+λ> :load ch07-functional-patterns/HOFs.hs
+[1 of 1] Compiling Main ( ch07-functional-patterns/HOFs.hs, interpreted )
+
+ch07-functional-patterns/HOFs.hs:16:1: error:
+    • Couldn't match expected type ‘d’
+                  with actual type ‘p0 -> p1 -> p2 -> p2’
+      ‘d’ is a rigid type variable bound by
+        the type signature for:
+          f :: forall a b c d. (((a -> b) -> c) -> d) -> d
+        at ch07-functional-patterns/HOFs.hs:15:1-32
+    • The equation(s) for ‘f’ have four arguments,
+      but its type ‘(((a -> b) -> c) -> d) -> d’ has only one
+    • Relevant bindings include
+        f :: (((a -> b) -> c) -> d) -> d
+          (bound at ch07-functional-patterns/HOFs.hs:16:1)
+   |
+16 | f x y w z = z
+   | ^^^^^^^^^^^^^
+Failed, no modules loaded.
+```
+
+
 
 ## Exercises: Artful dodgy
 
@@ -213,6 +258,10 @@ Any type of numbers that can be compared.
 ```haskell
 numbers :: (Ord a, Num a, Num p) => a -> p
 ```
+
+
+
+
 
 ## Chapter exercises
 
@@ -334,11 +383,11 @@ main = do
 
 ```haskell
 roundTrip :: (Show a, Read b) => a -> b
-roundTrip a = read $ show a
+roundTrip = read . show
 
 main :: IO ()
 main = do
-  print ((roundTrip) 4 :: Int)
-  dprint $ id 4
+  print (roundTrip 1 :: Word)
+  print (id 1)
 ```
 

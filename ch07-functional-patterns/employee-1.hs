@@ -1,8 +1,10 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
-data Employee =
-  Coder | Manager | Veep | CEO
-  deriving (Eq, Ord, Show)
+--
+-- **IMPORTANT**: Remember that when ordering things, the data constructors on
+-- the left are considered “less than” the data constructors on the right.
+--
+data Employee = Coder | Manager | Veep | CEO deriving (Eq, Ord, Show)
 
 reportBoss :: Employee -> Employee -> IO ()
 reportBoss e e' =
@@ -17,3 +19,4 @@ employeeRank e e' =
     GT -> reportBoss e e'
     EQ -> putStrLn "Neither is boss"
     LT -> (flip reportBoss) e e'
+

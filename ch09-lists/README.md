@@ -1,6 +1,5 @@
 # Lists - Chapter 09
 
-
 <!-- vim-markdown-toc GitLab -->
 
 * [Exercise: EnumFromTo](#exercise-enumfromto)
@@ -53,6 +52,9 @@
     * [04](#04-3)
     * [05, 06](#05-06)
   * [Ciphers](#ciphers)
+    * [Caesar Solution 1](#caesar-solution-1)
+    * [Caesar Solution 2](#caesar-solution-2)
+    * [Caesar Solution 3](#caesar-solution-3)
   * [Writing your own standard functions](#writing-your-own-standard-functions)
 * [The End](#the-end)
 
@@ -63,11 +65,30 @@
 Page 306.
 
 ```haskell
+--
+-- The "enum from to" functions return empty list if the starting point is
+-- less than the ending point. Remember that sum (or) data constructors behave
+-- like a number line. So, things to the left are “less than” things on the
+-- right.
+--
+-- λ> :info Bool
+-- data Bool = False | True
+--
+-- λ> enumFromTo True False
+-- []
+--
+-- λ> enumFromTo False True
+-- [False,True]
+--
 eftBool :: Bool -> Bool -> [Bool]
-eftBool False _ = [False, True]
-eftBool True  _ = [True, False]
+eftBool False _    = []
+eftBool True False = [True, False]
+eftBool _ _        = []
 
-
+--
+-- A very explicit and manual way of ranging over the tree possible data
+-- constructors of `Ordering`.
+--
 eftOrd :: Ordering -> Ordering -> [Ordering]
 eftOrd LT EQ = [LT, EQ]
 eftOrd EQ LT = [EQ, LT]
@@ -75,6 +96,18 @@ eftOrd EQ GT = [EQ, GT]
 eftOrd GT EQ = [GT, EQ]
 eftOrd LT _  = [LT, EQ, GT]
 eftOrd GT _  = [GT, EQ, LT]
+
+--
+-- Using recursion.
+--
+eftOrdering :: Ordering -> Ordering -> [Ordering]
+eftOrdering ini end = run ini []
+  where
+    run current acc
+          | (<) end current = []
+          | (==) current end = (++) acc [current]
+          | otherwise = run (succ current) ((++) acc [current])
+
 
 --
 -- ‘ini’ must be less than ‘end’. Does not handle randing down, or
@@ -99,8 +132,6 @@ eftChar ini end = go (succ ini) [ini]
           | otherwise = go (succ current) (acc ++ [current])
 ```
 
-
-
 ## Exercises: Thy fearful symmetry
 
 Page 310.
@@ -119,6 +150,51 @@ myWords str = go str []
 --
 -- [λ> myWords "Tomb Raider - The Angel Of Darkness"
 -- ["Tomb","Raider","-","The","Angel","Of","Darkness"]
+--
+```
+
+Another version:
+
+```haskell
+{-# LANGUAGE NoMonomorphismRestriction #-}
+
+dropWhileSpc :: [Char] -> [Char]
+dropWhileSpc = dropWhile (== ' ')
+
+dropUntilSpc :: [Char] -> [Char]
+dropUntilSpc = dropWhile (/= ' ')
+
+isSpc :: Char -> Bool
+isSpc ' ' = True
+isSpc _   = False
+
+takeUntilSpc :: [Char] -> [Char]
+takeUntilSpc = takeWhile (/= ' ')
+
+toList :: a -> [a]
+toList thing = (:) thing []
+
+myWords :: [Char] -> [[Char]]
+myWords s = go s []
+  where
+    go :: [Char] -> [[Char]] -> [[Char]]
+    go xs acc
+        | (==) xs [] = acc
+        | isSpc . head $ xs = go (dropWhileSpc xs) acc
+        | otherwise =
+            go
+              (dropUntilSpc xs)
+              ((++) (toList . takeUntilSpc $ xs) acc)
+--
+-- λ> mapM_ putStrLn $ myWords "💖 Tomb Raider - Angel of Darkness 💯"
+-- 💯
+-- Darkness
+-- of
+-- Angel
+-- -
+-- Raider
+-- Tomb
+-- 💖
 --
 ```
 
@@ -210,7 +286,6 @@ toList chr str = go chr str []
                         (dropUntil chr s)
                         (acc ++ [takeWhile (/= chr) s])
 
-
 main :: IO ()
 main = do
   putStrLn $
@@ -228,40 +303,38 @@ main = do
 --
 ```
 
-
-
 ## Exercises: Comprehend thy lists
 
 Page 314.
 
 Required for the two exercises.
 
-```haskell
-mySqr = [x ^ 2 | x <- [1..10]]
 ```
-
-
+λ> mySqr = [x ^ 2 | x <- [1..10]]
+λ> mySqr
+[1,4,9,16,25,36,49,64,81,100]
+```
 
 First exercise:
 
-```haskell
-result1 = [x | x <- mySqr, rem x 2 == 0]
 ```
-
-Using a predicate to filter out numbers that are not even.
-
-
+λ> [x | x <- mySqr, rem x 2 == 0]
+[4,16,36,64,100]
+```
 
 Second exercise:
 
-```haskell
-result2 = [(x, y) | x <- mySqr,
-                    y <- mySqr,
-                    x < 50,
-                    y > 50]
+```
+λ> [(x, y) | x <- mySqr,
+            y <- mySqr,
+            x < 50,
+            y > 50]
+
+λ> res
+[(1,64),(1,81),(1,100),(4,64),(4,81),(4,100),(9,64),(9,81),(9,100),(16,64),(16,81),(16,100),(25,64),(25,81),(25,100),(36,64),(36,81),(36,100),(49,64),(49,81),(49,100)]
 ```
 
-Combine each `x` with all `y`s.
+Combine each `x` with all `y`s. The `take 5` exercises just returns the first 5 elements of the result above.
 
 ## Exercises: Square Cube
 
@@ -425,15 +498,13 @@ Produces a list with the sums of each inner list.
 
 ### 06
 
-With `bool`, if the third argument is `False`, return the first argument, othewerwise, return the second argument.
+With `bool`, if the third argument is `False`, return the first argument, otherwise, return the second argument.
 
 ```ghci
 λ> import Data.Bool (bool)
 λ> map (\x -> bool (x + 100) (- x) (x == 3)) [1 .. 5]
 [101,102,-3,104,105]
 ```
-
-
 
 ## Exercises: Filtering
 
@@ -478,7 +549,7 @@ s1 = "the brown dog was a goof"
 s2 = "there is an old jedi here"
 
 dropArticles :: [Char] -> [[Char]]
-dropArticles str = filter isNotArticle $ words str
+dropArticles s = filter isNotArticle $ words s
   where isNotArticle w = not $ elem w ["a", "an", "the"]
 --
 -- λ> dropArticles s1
@@ -516,7 +587,24 @@ myZip'' [] _          = []
 myZip'' _  []         = []
 myZip'' xs ys =
   (myZipWith (,) xs ys) ++ myZip'' (tail xs) (tail ys)
+
+
+myZip''' :: [a] -> [b] -> [(a, b)]
+myZip''' [] _  = []
+myZip''' _  [] = []
+myZip''' xs ys = myZipWith (,) xs ys
 ```
+
+TODO: Why can't I simply do:
+
+```
+myZip' :: [a] -> [b] -> [(a, b)]
+myZip' [] _  = []
+myZip' _  [] = []
+myZip' = myZipWith (,)
+```
+
+Shouldn't it work since partially applying `myZipWith (,)` returns a function that expect the two remaining lists?
 
 ## Chapter Exercises
 
@@ -527,12 +615,12 @@ Page 338.
 Assume this for all the solutions:
 
 ```haskell
-import Data.Char
+import Data.Char (isUpper, toUpper)
 ```
 
 #### 01
 
-```haskell
+```GHCi
 λ> :t toUpper
 toUpper :: Char -> Char
 λ> :t isUpper
@@ -546,6 +634,9 @@ Using function composition:
 ```haskell
 dropUppers :: [Char] -> [Char]
 dropUppers = filter $ not . isUpper
+
+onlyUppers :: [Char] -> [Char]
+onlyUppers = filter isUpper
 ```
 
 #### 03
@@ -560,12 +651,28 @@ capitFst' :: [Char] -> [Char]
 capitFst' (x:xs) = [toUpper x] ++ xs
 ```
 
+Or using cons syntax:
+
+```haskell
+capitalizeFirst :: [Char] -> [Char]
+capitalizeFirst []     = []
+capitalizeFirst (c:cs) = toUpper c : cs
+```
+
 #### 04
 
 ```haskell
 capit :: [Char] -> [Char]
 capit [] = []
 capit (x:xs) = [toUpper x] ++ capit xs
+```
+
+Or using cons syntax:
+
+```hs
+capitalizeAll :: [Char] -> [Char]
+capitalizeAll []     = []
+capitalizeAll (c:cs) = toUpper c : capitalizeAll cs
 ```
 
 #### 05, 06
@@ -589,6 +696,10 @@ upFst''' = toUpper . head
 ### Ciphers
 
 Page 339.
+
+##### Caesar Solution 1
+
+Solution from my first study of the book
 
 ```haskell
 {-# LANGUAGE NoMonomorphismRestriction #-}
@@ -636,6 +747,99 @@ main :: IO ()
 main = do
   print $ caesar 3 orig == caesared
   print $ unCaesar 3 caesared == orig
+```
+
+##### Caesar Solution 2
+
+```haskell
+{-# LANGUAGE NoMonomorphismRestriction #-}
+
+module Cipher where
+
+--
+-- The english alphabet has 26 characters.
+--
+
+import Data.Char (chr, ord)
+
+shift :: Int -> Char -> Char
+shift step char =
+  chr $ (mod (ord char - ai + step) 26) + ai
+  where
+    ai :: Int
+    ai = ord 'a'
+
+caesar :: Int -> [Char] -> [Char]
+caesar n = map (shift n)
+
+unCaesar :: Int -> [Char] -> [Char]
+unCaesar n = caesar (- n)
+
+--
+-- λ> caesar 3 "abc"
+-- "def"
+--
+-- λ> caesar 3 "hello"
+-- "khoor"
+--
+-- λ> unCaesar 3 it
+-- "hello"
+--
+-- λ> caesar 3 "xyz"
+-- "abc"
+--
+-- λ> unCaesar 3 it
+-- "xyz"
+--
+```
+
+##### Caesar Solution 3
+
+```haskell
+{-# LANGUAGE NoMonomorphismRestriction #-}
+
+module Cipher where
+
+--
+-- The english alphabet has 26 characters.
+--
+
+import Data.Char (chr, ord)
+
+shift :: Int -> Char -> Char
+shift step char =
+  -- chr $ ai + (mod (pos char + step) 26)
+  chr $ move (pos char) step
+  where
+    ai :: Int
+    ai = ord 'a'
+    pos :: Char -> Int
+    pos c = (ord c - ai)
+    move :: Int -> Int -> Int
+    move p n = (mod (p + n) 26) + ai
+
+caesar :: Int -> [Char] -> [Char]
+caesar n = map (shift n)
+
+unCaesar :: Int -> [Char] -> [Char]
+unCaesar n = caesar (- n)
+
+--
+-- λ> caesar 3 "abc"
+-- "def"
+--
+-- λ> caesar 3 "hello"
+-- "khoor"
+--
+-- λ> unCaesar 3 it
+-- "hello"
+--
+-- λ> caesar 3 "xyz"
+-- "abc"
+--
+-- λ> unCaesar 3 it
+-- "xyz"
+--
 ```
 
 ### Writing your own standard functions
@@ -709,6 +913,20 @@ myMaximumBy compFn (x:xs) =
     EQ -> x
     LT -> myMaximumBy compFn xs
 
+--
+-- Fails with empty list, as does standard `maximumBy`. Version from
+-- my second take on the book.
+--
+myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy fn list = go fn (tail list) (head list)
+  where
+    go :: (a -> a -> Ordering) -> [a] -> a -> a
+    go _ [] maxSoFar = maxSoFar
+    go f (x:xs) maxSoFar =
+      case f x maxSoFar of
+        GT -> go f xs x -- x is the new maxSoFar
+        _  -> go f xs maxSoFar -- maxSoFar is still the maximum so far
+
 
 myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
 myMinimumBy _ [x] = x
@@ -718,6 +936,15 @@ myMinimumBy compFn (x:xs) =
     EQ -> x
     GT -> myMinimumBy compFn xs
 
+myMininumBy :: (a -> a -> Ordering) -> [a] -> a
+myMininumBy fn list = go fn (tail list) (head list)
+  where
+    go :: (a -> a -> Ordering) -> [a] -> a -> a
+    go _ [] minSoFar = minSoFar
+    go f (x:xs) minSoFar =
+      case f x minSoFar of
+        LT -> go f xs x -- x is the new minSoFar
+        _  -> go f xs minSoFar -- minSoFar is still the minimum so far
 
 myMaximum :: Ord a => [a] -> a
 myMaximum = myMaximumBy compare
@@ -725,23 +952,5 @@ myMaximum = myMaximumBy compare
 myMinimum :: Ord a => [a] -> a
 myMinimum = myMinimumBy compare
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## The End

@@ -38,6 +38,11 @@ dropUntil chr str
   | head str == chr = tail str
   | otherwise = dropUntil chr (dropWhile (/= chr) str)
 
+--
+-- What changes between `myWords` and `myLines` is the char used to split the
+-- input into. So, we make it a parameter so we can use the same function to
+-- make lists dividing input using different chars.
+--
 toList :: Char -> String -> [String]
 toList chr str = go chr str []
   where go chr s acc
@@ -45,7 +50,6 @@ toList chr str = go chr str []
           | otherwise = go chr
                         (dropUntil chr s)
                         (acc ++ [takeWhile (/= chr) s])
-
 
 main :: IO ()
 main = do
@@ -62,4 +66,3 @@ main = do
 -- Tomb Raider --: True
 -- Sentences ----: True
 --
-

@@ -1,35 +1,27 @@
 # Folding Lists - Chapter 10
 
-
-<!-- vim-markdown-toc GitLab -->
-
-* [Exercises: Understanding folds](#exercises-understanding-folds)
-  * [01](#01)
-  * [02](#02)
-  * [03](#03)
-  * [04](#04)
-  * [05](#05)
-    * [a](#a)
-    * [b](#b)
-    * [c](#c)
-    * [d](#d)
-    * [e](#e)
-    * [f](#f)
-    * [g](#g)
-    * [h](#h)
-    * [i](#i)
-* [Exercises: Database processing](#exercises-database-processing)
-* [Scans exercises](#scans-exercises)
-* [Warm-up and review](#warm-up-and-review)
-  * [01](#01-1)
-  * [02](#02-1)
-  * [03](#03-1)
-  * [Rewriting functions using folds](#rewriting-functions-using-folds)
-  * [The End](#the-end)
-
-<!-- vim-markdown-toc -->
-
-## Exercises: Understanding folds
+* [01](#01)
+* [02](#02)
+* [03](#03)
+* [04](#04)
+* [05](#05)
+  * [a](#a)
+  * [b](#b)
+  * [c](#c)
+  * [d](#d)
+  * [e](#e)
+  * [f](#f)
+  * [g](#g)
+  * [h](#h)
+  * [i](#i)
+  * [Exercises: Database processing](#exercises:-database-processing)
+  * [Scans exercises](#scans-exercises)
+  * [Warm-up and review](#warm-up-and-review)
+* [01](#01)
+* [02](#02)
+* [03](#03)
+* [Rewriting functions using folds](#rewriting-functions-using-folds)
+* [The End](#the-end)
 
 Page 365.
 
@@ -37,12 +29,10 @@ Page 365.
 
 B and C are correct. Both `foldr` and `foldl` will do because `(*)` is associative. Flipping `(*)` doesn’t change the results, again, because `(*)` is associative.
 
-
-
 ### 02
 
-```haskell
-foldl *' 1 [1, 2, 3]
+```
+foldl * 1 [1, 2, 3]
 
 foldl (flip (*)) 1 [1, 2, 3]
 
@@ -82,6 +72,21 @@ foldl (flip f) ((flip f) 2 3) []
 acc = 6, (2 * 3)
 
 Reaches base case, returns ‘z’, our ‘acc’.
+```
+
+Or, assigning `flip (*)` to a simpler variable to reduce number of parentheses:
+
+```
+f = flip (*)
+
+foldl f 1 [1, 2, 3]
+foldl f (f 1 1) [2, 3]
+           1 (1 * 1 is 1)
+foldl f (f 1 2) [3]
+           2 (1 * 2 is 2)
+foldl f (f 2 3) []
+           6 (2 * 3 is 6)
+6
 ```
 
 ### 03
@@ -131,7 +136,7 @@ foldr (&&) True [False, True]
 It always returns `True`, which is incorrect. We must make the zero produce `False` instead.
 
 ```haskell
-folder (||) False [False, True]
+foldr (||) False [False, True]
 ```
 
 #### e
@@ -148,9 +153,17 @@ Or flipping `((++) . show)`, although the result is in reverse order:
 "321"
 ```
 
-‘foldr’ applies ‘f x’. So, we apply ‘((++) . show)’ to ‘1’ first, not to ‘""’ first.
+`foldr` applies `f x` first, so we apply `((++) . show)`to `1` first, converting it to a string, which is `(++)` concatenated to the “rest of the fold”.
 
-‘foldl’ applies ‘f’ to the zero/acc first, and the current ‘x’ (1, 2, 3) do not get converted to string, and are attempted to be concatenated to the ‘acc’ as a number, which is incorrect and causes errors.
+`foldl` applies `f` to the zero/acc first, which *is* a string already, and then tries to `(++)`concatenate it with the number which was *not* converted to a string. It blows up! 💣
+
+```
+λ> ((++) . show) 1 ""
+"1"
+
+λ> ((++) . show) "" 1
+💥 error
+```
 
 #### f
 
@@ -174,6 +187,8 @@ Zero has the type ‘Char’, and the list is of type ‘Num’. The type of zer
 ```
 
 #### g
+
+`foldr const 0 "tacos"` is incorrect because the accumulator char `'t'` does not match the type of 0 (the number zero). Possible solutions depending on the result sought:
 
 ```ghci
 λ> foldl const 0 "tacos"
@@ -212,54 +227,77 @@ Page 371.
 ```haskell
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
+import Text.Pretty.Simple (pPrint)
 import Data.Time
 
-data DBItem = DbStr String
-            | DbNum Integer
-            | DbDate UTCTime
+pp = pPrint
+
+data DBItem = DBString String
+            | DBNumber Integer
+            | DBDate UTCTime
             deriving (Eq, Ord, Show)
-
-theDb :: [DBItem]
+theDb :: [] DBItem
 theDb =
-  [ DbDate (UTCTime (fromGregorian 1911 5 1)
+  [ DBDate (UTCTime (fromGregorian 1911 5 1)
                     (secondsToDiffTime 34123))
-  , DbNum 2001
-  , DbStr "Use the force!"
-  , DbDate (UTCTime (fromGregorian 1921 5 1)
+  , DBNumber 9001
+  , DBString "Hello, World!"
+  , DBDate (UTCTime (fromGregorian 1921 5 1)
                     (secondsToDiffTime 34123))
-  ]
+  , DBNumber 100
+ ]
 
-otherDb = theDb ++
-  [ DbNum 1
-  , DbNum 10
-  ]
+filterDbDate :: [] DBItem -> [] UTCTime
+filterDbDate items = foldr f [] items
+  where
+    --   (a     -> b           -> b)
+    f :: DBItem -> [] UTCTime -> [] UTCTime
+    f (DBDate x) acc = (:) x acc
+    f _          acc = acc
+--
+-- λ> pp (filterDbDate theDb)
+-- [ 1911 - 05 - 01 09 : 28 : 43 UTC
+-- , 1921 - 05 - 01 09 : 28 : 43 UTC
+-- ]
+--
+-- `foldr` passes one `DBItem` at a time to the folding function `f`.
+--
 
-isDbDate (DbDate d) = True
-isDbDate _          = False
+filterDbNumber :: [] DBItem -> [] Integer
+filterDbNumber items = foldr f [] items
+  where
+    --   (a     -> b           -> b)
+    f :: DBItem -> [] Integer -> [] Integer
+    f (DBNumber n) nums = (:) n nums
+    f _            nums = nums
+--
+-- λ> pp $ filterDbNumber theDb
+-- [ 9001 ]
+--
+-- `foldr` passes one `DBItem` at a time to the folding function `f`.
+--
+-- So, we can't return a `[] DBNumber`. We use it to pattern match on the
+-- item, but since `DBNumber` is a data constructor (and not a type), we can't
+-- use it in type signatures. Pattern matching is for runtime data.
+--
 
-filterDbDate :: [DBItem] -> [UTCTime]
-filterDbDate = foldr f []
-  where f (DbDate d) acc = d : acc
-        f _          acc = acc
 
-filterDbNum :: [DBItem] -> [Integer]
-filterDbNum = foldr f []
-  where f (DbNum n) acc = n : acc
-        f _         acc = acc
+mostRecent :: [] DBItem -> UTCTime
+mostRecent items = maximum $ filterDbDate items
 
-mostRecentDate :: [DBItem] -> UTCTime
-mostRecentDate = minimum . filterDbDate
+leastRecent :: [] DBItem -> UTCTime
+leastRecent items = minimum $ filterDbDate items
 
-sumNums :: [DBItem] -> Integer
-sumNums = sum . filterDbNum
+sumDbNumbers :: [DBItem] -> Integer
+sumDbNumbers = sum . filterDbNumber
 
-avgNums :: (Fractional a) => [DBItem] -> a
-avgNums items = (/) total len
-  where total = fromIntegral $ sumNums items
-        len   = fromIntegral $ length $ filterDbNum items
-
-countDate :: [DBItem] -> Int
-countDate = length . filterDbDate
+avgDbNums :: [DBItem] -> Double
+avgDbNums items = total / count
+  where
+    count :: Double
+    count = fromIntegral . length . filterDbNumber $ items
+    total :: Double
+    total = fromIntegral . sumDbNumbers $ items
 ```
 
 ## Scans exercises
@@ -311,8 +349,6 @@ factN :: Int -> Word
 factN n = facts !! n
 ```
 
-
-
 ## Warm-up and review
 
 Page 378.
@@ -336,7 +372,6 @@ verbs = ["fight", "run", "meow"]
 
 allnv :: [[Char]] -> [[Char]] -> [([Char], [Char])]
 allnv ns vs = [(n, v) | n <- ns, v <- vs]
-
 ```
 
 ### 02
@@ -506,11 +541,5 @@ myMininumBy p xs = foldr (\x acc ->
                             then x
                             else acc) (last xs) xs
 ```
-
-
-
-
-
-
 
 ### The End
